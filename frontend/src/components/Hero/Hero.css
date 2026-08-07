@@ -1,0 +1,630 @@
+/* ===========================
+   HERO SECTION
+=========================== */
+
+.hero{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    min-height:90vh;
+
+    padding:0 8%;
+
+    overflow:hidden;
+
+    background:#020617;
+
+}
+
+/* ===========================
+   Animated Background
+=========================== */
+
+.hero::before,
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    width:180%;
+    height:180%;
+
+    transform:translate(-50%,-50%);
+
+    background:conic-gradient(
+        #0ea5e9,
+        #2563eb,
+        #3b82f6,
+        #60a5fa,
+        #38bdf8,
+        #2563eb,
+        #0ea5e9
+    );
+
+    filter:blur(100px);
+
+    opacity:.12;
+
+    animation:rotateGlow 18s linear infinite;
+
+    z-index:0;
+
+}
+
+.hero::after{
+
+    width:160%;
+    height:160%;
+
+    opacity:.08;
+
+    animation:rotateGlowReverse 28s linear infinite;
+
+}
+
+/* ===========================
+   Content
+=========================== */
+
+.hero-content{
+
+    width:50%;
+
+    position:relative;
+
+    z-index:2;
+
+    animation:fadeLeft 1s ease;
+
+}
+
+.hero-content h1{
+
+    font-family:"Exo 2",sans-serif;
+
+    font-size:72px;
+
+    font-weight:800;
+
+    line-height:1.1;
+
+    color:#ffffff;
+
+    margin-bottom:25px;
+
+}
+
+.hero-content p{
+
+    color:#d1d5db;
+
+    font-size:21px;
+
+    line-height:1.8;
+
+    margin-bottom:40px;
+
+}
+
+/* ===========================
+   Button
+=========================== */
+
+.shop-btn{
+
+    display:inline-block;
+
+    padding:16px 42px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:14px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    transition:.35s;
+
+    box-shadow:
+        0 15px 35px rgba(37,99,235,.35);
+
+}
+
+.shop-btn:hover{
+
+    transform:
+        translateY(-6px)
+        scale(1.04);
+
+    box-shadow:
+        0 25px 45px rgba(37,99,235,.55);
+
+}
+
+/* ===========================
+   Image
+=========================== */
+
+.hero-image{
+
+    width:45%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    z-index:2;
+
+    animation:fadeRight 1s ease;
+
+}
+
+.hero-image::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:430px;
+
+    height:430px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+        rgba(59,130,246,.45),
+        transparent 70%
+    );
+
+    filter:blur(35px);
+
+    z-index:-1;
+
+}
+
+.hero-image img{
+
+    width:100%;
+
+    max-width:650px;
+
+    animation:floatLaptop 5s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 35px 50px rgba(0,0,0,.45));
+
+}
+
+/* ===========================
+   Animations
+=========================== */
+
+@keyframes floatLaptop{
+
+    0%,100%{
+
+        transform:
+        translateY(0);
+
+    }
+
+    50%{
+
+        transform:
+        translateY(-18px);
+
+    }
+
+}
+
+@keyframes fadeLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(-60px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+@keyframes fadeRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(60px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+@keyframes rotateGlow{
+
+    from{
+
+        transform:
+        translate(-50%,-50%)
+        rotate(0deg);
+
+    }
+
+    to{
+
+        transform:
+        translate(-50%,-50%)
+        rotate(360deg);
+
+    }
+
+}
+
+@keyframes rotateGlowReverse{
+
+    from{
+
+        transform:
+        translate(-50%,-50%)
+        rotate(0deg);
+
+    }
+
+    to{
+
+        transform:
+        translate(-50%,-50%)
+        rotate(-360deg);
+
+    }
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:900px){
+
+    .hero{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        padding:60px 30px;
+
+    }
+
+    .hero-content{
+
+        width:100%;
+
+        margin-bottom:50px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:48px;
+
+    }
+
+    .hero-content p{
+
+        font-size:18px;
+
+    }
+
+    .hero-image{
+
+        width:100%;
+
+    }
+
+    .hero-image img{
+
+        max-width:450px;
+
+    }
+
+}
+
+/* ===========================
+   3D Laptop Effect
+=========================== */
+
+.hero-image{
+
+    perspective:1200px;
+
+}
+
+.hero-image img{
+
+    transition:
+
+        transform .25s ease,
+
+        filter .3s ease;
+
+    transform-style:preserve-3d;
+
+    cursor:pointer;
+
+}
+
+.hero-image:hover img{
+
+    filter:
+
+        drop-shadow(
+            0 45px 60px
+            rgba(37,99,235,.45)
+        );
+
+}
+
+/* ==========================
+   Mouse Spotlight
+========================== */
+
+.spotlight{
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+
+        rgba(59,130,246,.35),
+
+        transparent 70%
+
+    );
+
+    left:var(--x);
+
+    top:var(--y);
+
+    transform:translate(-50%,-50%);
+
+    pointer-events:none;
+
+    filter:blur(30px);
+
+    transition:left .08s linear,
+               top .08s linear;
+
+    z-index:1;
+
+}
+
+/* ==========================
+   Floating Particles
+========================== */
+
+.particles span{
+
+    position:absolute;
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#60a5fa;
+
+    box-shadow:0 0 15px #3b82f6;
+
+    animation:particleFloat linear infinite;
+
+}
+
+.particles span:nth-child(1){
+
+    left:8%;
+    top:70%;
+
+    animation-duration:10s;
+
+}
+
+.particles span:nth-child(2){
+
+    left:28%;
+    top:90%;
+
+    animation-duration:14s;
+
+}
+
+.particles span:nth-child(3){
+
+    left:55%;
+    top:75%;
+
+    animation-duration:11s;
+
+}
+
+.particles span:nth-child(4){
+
+    left:82%;
+    top:80%;
+
+    animation-duration:15s;
+
+}
+
+.particles span:nth-child(5){
+
+    left:95%;
+    top:65%;
+
+    animation-duration:12s;
+
+}
+
+@keyframes particleFloat{
+
+    from{
+
+        transform:
+        translateY(0)
+        scale(1);
+
+        opacity:.2;
+
+    }
+
+    to{
+
+        transform:
+        translateY(-450px)
+        scale(2);
+
+        opacity:0;
+
+    }
+
+}
+
+/* ==========================
+   Text Animation
+========================== */
+
+.hero-content{
+
+    animation:fadeLeft 1s ease;
+
+}
+
+.hero-image{
+
+    animation:fadeRight 1s ease;
+
+}
+
+@keyframes fadeLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(-80px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+@keyframes fadeRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(80px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+/* ==========================
+   Laptop
+========================== */
+
+.hero-image{
+
+    perspective:1400px;
+
+}
+
+.hero-image img{
+
+    transition:
+        transform .2s ease,
+        filter .3s ease;
+
+    transform-style:preserve-3d;
+
+}
+
+.hero-image img:hover{
+
+    filter:
+
+        drop-shadow(
+
+        0 35px 45px
+
+        rgba(37,99,235,.45)
+
+        );
+
+}

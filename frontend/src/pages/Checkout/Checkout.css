@@ -1,0 +1,231 @@
+/* =====================================
+   CHECKOUT PAGE
+===================================== */
+
+.checkout-page{
+
+    max-width:1400px;
+
+    margin:50px auto;
+
+    padding:0 40px;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:40px;
+
+}
+
+/* =====================================
+   LEFT SIDE
+===================================== */
+
+.checkout-left{
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.checkout-left h2{
+
+    margin-bottom:30px;
+
+    color:#0f172a;
+
+}
+
+.checkout-left form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.checkout-left input,
+.checkout-left textarea{
+
+    width:100%;
+
+    padding:16px 18px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:12px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+
+    box-sizing:border-box;
+
+}
+
+.checkout-left textarea{
+
+    resize:none;
+
+    height:120px;
+
+}
+
+.checkout-left input:focus,
+.checkout-left textarea:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+/* =====================================
+   RIGHT SIDE
+===================================== */
+
+.checkout-right{
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    height:fit-content;
+
+    position:sticky;
+
+    top:100px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.checkout-right h2{
+
+    margin-bottom:25px;
+
+    color:#0f172a;
+
+}
+
+/* =====================================
+   SUMMARY ITEMS
+===================================== */
+
+.summary-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:18px;
+
+    color:#374151;
+
+    font-size:15px;
+
+}
+
+.summary-item span:last-child{
+
+    font-weight:600;
+
+}
+
+/* =====================================
+   TOTAL
+===================================== */
+
+.summary-total{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:25px 0;
+
+}
+
+.summary-total h3{
+
+    margin:0;
+
+    color:#111827;
+
+}
+
+/* =====================================
+   BUTTON
+===================================== */
+
+.place-order{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.place-order:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 30px rgba(37,99,235,.35);
+
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:900px){
+
+.checkout-page{
+
+grid-template-columns:1fr;
+
+padding:20px;
+
+}
+
+.checkout-right{
+
+position:static;
+
+}
+
+}

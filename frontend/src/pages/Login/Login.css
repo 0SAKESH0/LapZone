@@ -1,0 +1,387 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+.login-container{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+overflow:hidden;
+
+position:relative;
+
+background:
+linear-gradient(
+-45deg,
+#020617,
+#0f172a,
+#1d4ed8,
+#2563eb,
+#3b82f6
+);
+
+background-size:400% 400%;
+
+animation:bgMove 12s ease infinite;
+
+}
+
+/* Floating Blobs */
+
+.blob{
+
+position:absolute;
+
+border-radius:50%;
+
+filter:blur(90px);
+
+opacity:.55;
+
+animation:float 12s infinite alternate;
+
+}
+
+.blob1{
+
+width:350px;
+height:350px;
+
+background:#3b82f6;
+
+top:-80px;
+left:-80px;
+
+}
+
+.blob2{
+
+width:280px;
+height:280px;
+
+background:#60a5fa;
+
+bottom:-70px;
+right:-80px;
+
+animation-duration:15s;
+
+}
+
+.blob3{
+
+width:220px;
+height:220px;
+
+background:#2563eb;
+
+top:50%;
+left:10%;
+
+animation-duration:18s;
+
+}
+
+/* Card */
+
+.login-card{
+
+position:relative;
+
+z-index:5;
+
+width:430px;
+
+padding:45px;
+
+background:rgba(255,255,255,.12);
+
+border:1px solid rgba(255,255,255,.18);
+
+backdrop-filter:blur(18px);
+
+border-radius:26px;
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.35);
+
+animation:cardShow .9s ease;
+
+}
+
+/* Animated Border */
+
+.login-card::before{
+
+content:"";
+
+position:absolute;
+
+inset:-2px;
+
+border-radius:28px;
+
+padding:2px;
+
+background:linear-gradient(
+45deg,
+#60a5fa,
+#2563eb,
+#ffffff,
+#2563eb
+);
+
+background-size:300% 300%;
+
+animation:borderGlow 5s linear infinite;
+
+-webkit-mask:
+linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+
+-webkit-mask-composite:xor;
+
+mask-composite:exclude;
+
+pointer-events:none;
+
+}
+
+/* Logo */
+
+.login-logo{
+
+font-size:58px;
+
+color:white;
+
+display:flex;
+
+justify-content:center;
+
+margin-bottom:20px;
+
+animation:bounce 2.5s infinite;
+
+}
+
+/* Heading */
+
+.login-card h1{
+
+text-align:center;
+
+color:white;
+
+font-size:34px;
+
+margin-bottom:8px;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+color:#dbeafe;
+
+margin-bottom:30px;
+
+}
+
+/* Inputs */
+
+.login-card input{
+
+width:100%;
+
+height:58px;
+
+margin-bottom:20px;
+
+padding:0 18px;
+
+border:none;
+
+outline:none;
+
+border-radius:15px;
+
+font-size:16px;
+
+background:rgba(255,255,255,.9);
+
+transition:.35s;
+
+}
+
+.login-card input:focus{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 0 0 3px rgba(96,165,250,.35),
+
+0 15px 25px rgba(37,99,235,.25);
+
+}
+
+/* Button */
+
+.login-card button{
+
+width:100%;
+
+height:58px;
+
+border:none;
+
+border-radius:15px;
+
+font-size:18px;
+
+font-weight:bold;
+
+color:white;
+
+background:linear-gradient(
+135deg,
+#2563eb,
+#1d4ed8
+);
+
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+.login-card button:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+
+0 20px 40px rgba(37,99,235,.4);
+
+}
+
+/* Register */
+
+.login-card p{
+
+margin-top:24px;
+
+text-align:center;
+
+color:white;
+
+}
+
+.login-card a{
+
+color:#facc15;
+
+font-weight:bold;
+
+margin-left:8px;
+
+text-decoration:none;
+
+}
+
+.login-card a:hover{
+
+text-decoration:underline;
+
+}
+
+/* Animations */
+
+@keyframes bgMove{
+
+0%{background-position:0% 50%;}
+
+50%{background-position:100% 50%;}
+
+100%{background-position:0% 50%;}
+
+}
+
+@keyframes float{
+
+0%{
+
+transform:translate(0,0);
+
+}
+
+100%{
+
+transform:translate(120px,80px);
+
+}
+
+}
+
+@keyframes cardShow{
+
+0%{
+
+opacity:0;
+
+transform:translateY(60px) scale(.9);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+@keyframes bounce{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-10px);
+
+}
+
+}
+
+@keyframes borderGlow{
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+100%{
+
+background-position:300% 50%;
+
+}
+
+}

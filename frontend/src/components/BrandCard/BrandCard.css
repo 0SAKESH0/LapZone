@@ -1,0 +1,34 @@
+.brand-card{
+    width:180px;
+    height:170px;
+
+    background:#fff;
+
+    border-radius:12px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.brand-card:hover{
+    transform:translateY(-8px);
+}
+
+.brand-card img{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+}
+
+.brand-card h3{
+    margin-top:15px;
+    font-size:18px;
+}
