@@ -1,0 +1,689 @@
+/* =========================================
+   LAPZONE - PREMIUM PRODUCT CARD
+   USED ON PRODUCTS PAGE
+========================================= */
+
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.product-wrapper.premium {
+    width: 300px;
+    height: 520px;
+
+    perspective: 1200px;
+
+    position: relative;
+}
+
+
+/* =========================================
+   OUTER BORDER
+========================================= */
+
+.product-wrapper.premium .outer {
+    width: 100%;
+    height: 100%;
+
+    padding: 2px;
+
+    position: relative;
+
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #60a5fa,
+            #2563eb,
+            #1e3a8a,
+            #0f172a
+        );
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.45s ease,
+        box-shadow 0.45s ease;
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.25);
+}
+
+
+/* =========================================
+   PREMIUM HOVER
+========================================= */
+
+.product-wrapper.premium:hover .outer {
+    transform:
+        rotateX(6deg)
+        rotateY(-6deg)
+        scale(1.02);
+
+    box-shadow:
+        0 25px 50px rgba(37, 99, 235, 0.35),
+        0 0 30px rgba(37, 99, 235, 0.2);
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.product-wrapper.premium .card {
+    width: 100%;
+    height: 100%;
+
+    padding: 22px 20px;
+
+    position: relative;
+    isolation: isolate;
+
+    border-radius: 24px;
+
+    overflow: visible;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(37, 99, 235, 0.25),
+            transparent 40%
+        ),
+        linear-gradient(
+            145deg,
+            #172554,
+            #0f172a 55%,
+            #020617
+        );
+
+    border:
+        1px solid rgba(147, 197, 253, 0.15);
+
+    color: #ffffff;
+
+    box-shadow:
+        inset 0 0 30px rgba(2, 6, 23, 0.7);
+}
+
+
+/* =========================================
+   MOVING DOT
+========================================= */
+
+.product-wrapper.premium .dot {
+    width: 7px;
+    height: 7px;
+
+    position: absolute;
+
+    top: 6px;
+    right: 6px;
+
+    z-index: 50;
+    pointer-events: none;
+
+    border-radius: 50%;
+
+    background: #93c5fd;
+
+    box-shadow:
+        0 0 10px #60a5fa,
+        0 0 20px #3b82f6;
+
+    animation:
+        premiumDot 8s linear infinite;
+}
+
+
+@keyframes premiumDot {
+
+    0%,
+    100% {
+        top: 6px;
+        right: 6px;
+    }
+
+    25% {
+        top: 6px;
+        right: calc(100% - 13px);
+    }
+
+    50% {
+        top: calc(100% - 13px);
+        right: calc(100% - 13px);
+    }
+
+    75% {
+        top: calc(100% - 13px);
+        right: 6px;
+    }
+}
+
+
+/* =========================================
+   LIGHT RAY
+========================================= */
+
+.product-wrapper.premium .ray {
+    width: 270px;
+    height: 80px;
+
+    position: absolute;
+
+    top: -10px;
+    left: -20px;
+
+    border-radius: 100px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(96, 165, 250, 0.35),
+            rgba(37, 99, 235, 0.12),
+            transparent
+        );
+
+    filter: blur(15px);
+
+    transform: rotate(35deg);
+
+    opacity: 0.7;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* =========================================
+   DISCOUNT
+========================================= */
+
+.product-wrapper.premium .discount {
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f97316,
+            #ea580c
+        );
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    z-index: 10;
+
+    box-shadow:
+        0 5px 15px rgba(234, 88, 12, 0.3);
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.product-wrapper.premium .image-box {
+    width: 100%;
+    height: 205px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    z-index: 3;
+}
+
+
+.product-wrapper.premium .image-box img {
+    width: 205px;
+
+    max-width: 90%;
+    max-height: 180px;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter:
+        drop-shadow(
+            0 15px 20px rgba(0, 0, 0, 0.45)
+        );
+
+    transition:
+        transform 0.5s ease,
+        filter 0.5s ease;
+}
+
+
+.product-wrapper.premium:hover .image-box img {
+    transform:
+        scale(1.08)
+        translateY(-6px);
+
+    filter:
+        drop-shadow(
+            0 20px 30px rgba(37, 99, 235, 0.35)
+        );
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.product-wrapper.premium .product-content {
+    width: 100%;
+
+    position: relative;
+
+    z-index: 5;
+
+    color: #ffffff;
+
+    flex: 1;
+}
+
+
+/* BRAND */
+
+.product-wrapper.premium .brand {
+    color: #60a5fa;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* NAME */
+
+.product-wrapper.premium .product-content h3 {
+    margin: 9px 0;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #f8fafc;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   RATING
+========================================= */
+
+.product-wrapper.premium .rating {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 12px;
+
+    color: #fbbf24;
+
+    font-size: 14px;
+}
+
+
+.product-wrapper.premium .rating span {
+    color: #cbd5e1;
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+.product-wrapper.premium .product-content h2 {
+    margin: 0;
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.product-wrapper.premium .buttons{
+    width:100%;
+
+    display:flex;
+    gap:12px;
+
+    margin-top:16px;
+
+    position:relative;
+
+    z-index: 20;
+
+    pointer-events:auto;
+}
+
+
+/* =========================================
+   CART BUTTON
+========================================= */
+
+.product-wrapper.premium .cart-btn {
+    flex: 1;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: #ffffff;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    position: relative;
+
+    z-index: 101;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+
+.product-wrapper.premium .cart-btn svg {
+    width: 18px;
+    height: 18px;
+
+    display: block;
+
+    fill: currentColor;
+}
+
+
+.product-wrapper.premium .cart-btn:hover {
+    transform: translateY(-3px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #2563eb
+        );
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, 0.45);
+}
+
+
+/* =========================================
+   HEART BUTTON
+========================================= */
+
+.product-wrapper.premium .heart-btn {
+    width: 52px;
+    height: 50px;
+
+    flex: 0 0 52px;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(147, 197, 253, 0.3);
+
+    border-radius: 13px;
+
+    background: #ffffff;
+
+    color: #94a3b8;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    position: relative;
+
+    z-index: 110;
+
+    overflow: visible;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* HEART ICON */
+
+.product-wrapper.premium .heart-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+
+    min-width: 22px;
+    min-height: 22px;
+
+    display: block !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    fill: currentColor !important;
+
+    color: inherit !important;
+
+    position: relative;
+
+    z-index: 111;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+/* HEART HOVER */
+
+.product-wrapper.premium .heart-btn:hover {
+    color: #ef4444;
+
+    transform:
+        translateY(-3px)
+        scale(1.05);
+
+    box-shadow:
+        0 10px 22px rgba(239, 68, 68, 0.3);
+}
+
+
+/* =========================================
+   WISHLIST ACTIVE
+========================================= */
+
+.product-wrapper.premium .heart-btn.active {
+    background: #ef4444 !important;
+
+    color: #ffffff !important;
+
+    border-color: #ef4444;
+
+    box-shadow:
+        0 10px 25px rgba(239, 68, 68, 0.45);
+}
+
+
+.product-wrapper.premium .heart-btn.active svg {
+    fill: #ffffff !important;
+
+    color: #ffffff !important;
+
+    transform: scale(1.12);
+}
+
+
+/* =========================================
+   DECORATIVE LINES
+========================================= */
+
+.product-wrapper.premium .line {
+    position: absolute;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+.product-wrapper.premium .topl {
+    width: 100%;
+    height: 1px;
+
+    top: 10%;
+    left: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(96, 165, 250, 0.25),
+            transparent
+        );
+}
+
+
+.product-wrapper.premium .bottoml {
+    width: 100%;
+    height: 1px;
+
+    bottom: 10%;
+    left: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(96, 165, 250, 0.25)
+        );
+}
+
+
+.product-wrapper.premium .leftl {
+    width: 1px;
+    height: 100%;
+
+    top: 0;
+    left: 10%;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(96, 165, 250, 0.2),
+            transparent
+        );
+}
+
+
+.product-wrapper.premium .rightl {
+    width: 1px;
+    height: 100%;
+
+    top: 0;
+    right: 10%;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(96, 165, 250, 0.2)
+        );
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .product-wrapper.premium {
+        width: 280px;
+        height: 500px;
+    }
+
+
+    .product-wrapper.premium:hover .outer {
+        transform: scale(1.01);
+    }
+
+
+    .product-wrapper.premium .image-box {
+        height: 190px;
+    }
+
+
+    .product-wrapper.premium .image-box img {
+        width: 190px;
+    }
+}
+.product-link{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+}
