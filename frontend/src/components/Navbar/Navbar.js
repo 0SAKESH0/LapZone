@@ -7,7 +7,6 @@ import { WishlistContext } from "../../context/WishlistContext";
 import {
   FaShoppingCart,
   FaUserCircle,
-  FaSearch,
   FaBars,
   FaTimes,
   FaLaptop,
@@ -20,57 +19,90 @@ function Navbar() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const cartCount = cart.reduce(
+    (sum, item) => sum + item.qty,
+    0
+  );
 
   return (
     <nav className="navbar">
 
-      <Link to="/" className="logo">
+      {/* Logo */}
+      <Link to="/" className="navbar-logo">
         <FaLaptop />
         <span>LapZone</span>
       </Link>
 
-      <div className={`nav-links ${menuOpen ? "active" : ""}`}>
-
-        <Link to="/">Home</Link>
-
-        <Link to="/products">Products</Link>
+      {/* Navigation */}
+      <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
 
         <Link
-  to="/wishlist"
-  className="wishlist-icon"
-  aria-label={`Wishlist: ${wishlist.length} item${wishlist.length === 1 ? "" : "s"}`}
->
-  <FaRegHeart />
+          to="/"
+          onClick={() => setMenuOpen(false)}
+        >
+          Home
+        </Link>
 
-  {wishlist.length > 0 && (
-    <span className="wishlist-badge">
-      {wishlist.length}
-    </span>
-  )}
-</Link>
+        <Link
+          to="/products"
+          onClick={() => setMenuOpen(false)}
+        >
+          Products
+        </Link>
 
-        <Link to="/cart" className="cart-icon">
+        {/* Wishlist */}
+        <Link
+          to="/wishlist"
+          className="nav-icon"
+          aria-label={`Wishlist: ${wishlist.length} item${
+            wishlist.length === 1 ? "" : "s"
+          }`}
+          onClick={() => setMenuOpen(false)}
+        >
+          <FaRegHeart />
 
+          {wishlist.length > 0 && (
+            <span className="nav-badge">
+              {wishlist.length}
+            </span>
+          )}
+        </Link>
+
+        {/* Cart */}
+        <Link
+          to="/cart"
+          className="nav-icon"
+          aria-label={`Cart: ${cartCount} item${
+            cartCount === 1 ? "" : "s"
+          }`}
+          onClick={() => setMenuOpen(false)}
+        >
           <FaShoppingCart />
 
           {cartCount > 0 && (
-            <span className="cart-badge">
+            <span className="nav-badge">
               {cartCount}
             </span>
           )}
-
         </Link>
 
-        <Link to="/login">
+        {/* Profile */}
+        <Link
+          to="/login"
+          className="nav-icon"
+          aria-label="Profile"
+          onClick={() => setMenuOpen(false)}
+        >
           <FaUserCircle />
         </Link>
 
       </div>
 
+      {/* Mobile Menu */}
       <button
         className="menu-btn"
         onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu"
       >
         {menuOpen ? <FaTimes /> : <FaBars />}
       </button>

@@ -1,6 +1,4 @@
 import "./Home.css";
-
-import Navbar from "../../components/Navbar/Navbar";
 import Hero from "../../components/Hero/Hero";
 import BrandCard from "../../components/BrandCard/BrandCard";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -42,7 +40,7 @@ function Home() {
 
   return (
     <>
-      <Navbar />
+     
       <Hero />
 
       {/* Shop By Brand */}

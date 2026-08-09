@@ -1,100 +1,389 @@
-/* ---------------------- */
-/* Shop By Brand */
-/* ---------------------- */
+/* ==========================================
+   FEATURED LAPTOPS
+========================================== */
 
-.brands{
+.featured {
+  position: relative;
+  padding: 90px 6%;
+  background: #ffffff;
+  overflow: hidden;
+}
 
-    padding:70px 0;
+/* Soft background decoration */
 
-    background:#f5f5f5;
+.featured::before {
+  content: "";
 
-    overflow:hidden;
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -180px;
+  right: -120px;
+
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.08),
+    transparent 70%
+  );
+
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+
+/* ==========================================
+   SECTION HEADING
+========================================== */
+
+.featured h2 {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+
+  margin: 0 0 50px;
+
+  font-size: clamp(30px, 4vw, 42px);
+
+  font-weight: 700;
+
+  letter-spacing: -1px;
+
+  color: #111827;
+}
+
+.featured h2::after {
+  content: "";
+
+  display: block;
+
+  width: 55px;
+  height: 4px;
+
+  margin: 16px auto 0;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #6366f1
+  );
+}
+
+
+/* ==========================================
+   PRODUCT GRID
+========================================== */
+
+.product-container {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 28px;
+
+  align-items: stretch;
+}
+
+
+/* ==========================================
+   PRODUCT CARD
+========================================== */
+
+.product-container > * {
+  width: 100%;
+  min-width: 0;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.product-container > *:hover {
+  transform: translateY(-8px);
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1100px) {
+
+  .product-container {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+  }
 
 }
 
-.brands h2{
 
-    text-align:center;
+/* ==========================================
+   MOBILE
+========================================== */
 
-    font-size:40px;
+@media (max-width: 650px) {
 
-    margin-bottom:50px;
+  .featured {
+    padding: 65px 20px;
+  }
 
-}
+  .product-container {
+    grid-template-columns: 1fr;
 
-.brand-slider{
+    gap: 22px;
+  }
 
-    width:100%;
-
-    overflow:hidden;
-
-    position:relative;
-
-}
-
-.brand-track{
-
-    display:flex;
-
-    gap:30px;
-
-    width:max-content;
-
-    animation:scrollBrands 18s linear infinite;
+  .featured h2 {
+    margin-bottom: 35px;
+  }
 
 }
 
-.brand-track:hover{
+/* ==========================================
+   SHOP BY BRAND
+========================================== */
 
-    animation-play-state:paused;
+.brands {
+  position: relative;
+  padding: 90px 0;
+  background: #f8faff;
+  overflow: hidden;
+}
+
+/* Soft background glow */
+
+.brands::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  left: -180px;
+  top: 20px;
+
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.10),
+    transparent 70%
+  );
+
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+/* Right glow */
+
+.brands::after {
+  content: "";
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  right: -180px;
+  bottom: -180px;
+
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.10),
+    transparent 70%
+  );
+
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+
+/* ==========================================
+   SECTION TITLE
+========================================== */
+
+.brands h2 {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+
+  margin: 0 0 48px;
+
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 700;
+
+  letter-spacing: -1.2px;
+
+  color: #111827;
+}
+
+.brands h2::after {
+  content: "";
+
+  display: block;
+
+  width: 55px;
+  height: 4px;
+
+  margin: 16px auto 0;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #6366f1
+  );
+}
+
+
+/* ==========================================
+   BRAND SLIDER
+========================================== */
+
+.brand-slider {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  padding: 15px 0 25px;
+}
+
+
+/* Fade edges */
+
+.brand-slider::before,
+.brand-slider::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 140px;
+
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+.brand-slider::before {
+  left: 0;
+
+  background: linear-gradient(
+    to right,
+    #f8faff,
+    transparent
+  );
+}
+
+.brand-slider::after {
+  right: 0;
+
+  background: linear-gradient(
+    to left,
+    #f8faff,
+    transparent
+  );
+}
+
+
+/* ==========================================
+   BRAND TRACK
+========================================== */
+
+.brand-track {
+  display: flex;
+
+  align-items: center;
+
+  gap: 28px;
+
+  width: max-content;
+
+  animation: scrollBrands 24s linear infinite;
+
+  will-change: transform;
+}
+
+.brand-track:hover {
+  animation-play-state: paused;
+}
+
+
+/* ==========================================
+   BRAND CARD
+========================================== */
+
+.brand-track > * {
+  flex-shrink: 0;
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+.brand-track > *:hover {
+  transform: translateY(-8px);
+
+  filter: brightness(1.03);
+}
+
+
+/* ==========================================
+   BRAND ANIMATION
+========================================== */
+
+@keyframes scrollBrands {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 
 }
 
-@keyframes scrollBrands{
 
-    from{
+/* ==========================================
+   MOBILE
+========================================== */
 
-        transform:translateX(0);
+@media (max-width: 768px) {
 
-    }
+  .brands {
+    padding: 65px 0;
+  }
 
-    to{
+  .brands h2 {
+    margin-bottom: 35px;
+  }
 
-        transform:translateX(-50%);
+  .brand-track {
+    gap: 18px;
 
-    }
+    animation-duration: 20s;
+  }
 
-}
+  .brand-slider::before,
+  .brand-slider::after {
+    width: 60px;
+  }
 
-/* ---------------------- */
-/* Featured Products */
-/* ---------------------- */
-
-.featured{
-
-    padding:70px;
-
-    background:#ffffff;
-
-}
-
-.featured h2{
-
-    text-align:center;
-
-    font-size:40px;
-
-    margin-bottom:50px;
-
-}
-.product-container{
-
-    display:flex;
-
-    justify-content:center;
-
-    flex-wrap:wrap;
-
-    gap:35px;
-
-}
+}   

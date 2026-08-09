@@ -24,6 +24,7 @@ function Sidebar({
     "Lenovo",
     "ASUS",
     "Acer",
+    "MSI",
   ];
 
   function clearFilters() {

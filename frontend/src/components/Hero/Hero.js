@@ -1,93 +1,81 @@
 import "./Hero.css";
 import homeImage from "../../assets/images/home.png";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
 
 function Hero() {
-
-  const heroRef = useRef(null);
-  const imageRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-
-    const hero = heroRef.current;
-    const img = imageRef.current;
-
-    const rect = hero.getBoundingClientRect();
-
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    hero.style.setProperty("--x", `${x}px`);
-    hero.style.setProperty("--y", `${y}px`);
-
-    const rotateY = ((x / rect.width) - 0.5) * 18;
-    const rotateX = ((y / rect.height) - 0.5) * -18;
-
-    img.style.transform = `
-      perspective(1200px)
-      rotateX(${rotateX}deg)
-      rotateY(${rotateY}deg)
-      translateY(-12px)
-    `;
-
-  };
-
-  const handleMouseLeave = () => {
-
-    imageRef.current.style.transform = `
-      perspective(1200px)
-      rotateX(0deg)
-      rotateY(0deg)
-      translateY(0)
-    `;
-
-  };
-
   return (
+    <section className="hero">
 
-    <section
-      className="hero"
-      ref={heroRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-
-      <div className="spotlight"></div>
-
-      <div className="particles">
-
+      {/* Animated Wave Background */}
+      <div className="wave">
         <span></span>
         <span></span>
         <span></span>
-        <span></span>
-        <span></span>
-
       </div>
 
+      {/* Background Particles */}
+      <div className="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      {/* Hero Content */}
       <div className="hero-content">
 
-        <h1>Find Your Perfect Laptop</h1>
+        <div className="hero-badge">
+          <span>✦</span>
+          Premium Laptops
+        </div>
+
+        <h1>
+          Find Your
+          <span>Perfect Laptop</span>
+        </h1>
 
         <p>
-          Shop the latest laptops from Apple,
-          Dell, HP, ASUS, Lenovo,
-          Acer and MSI.
+          Shop the latest laptops from Apple, Dell, HP, ASUS,
+          Lenovo, Acer, MSI and more at the best prices.
         </p>
 
-        <Link
-          to="/products"
-          className="shop-btn"
-        >
-          Shop Now
+        <Link to="/products" className="shop-btn">
+          <span className="button-text">Shop Now</span>
+          <span className="button-arrow">→</span>
         </Link>
+
+        {/* Hero Stats */}
+        <div className="hero-stats">
+
+          <div className="stat">
+            <strong>500+</strong>
+            <span>Laptops</span>
+          </div>
+
+          <div className="stat">
+            <strong>7</strong>
+            <span>Top Brands</span>
+          </div>
+
+          <div className="stat">
+            <strong>2 Year</strong>
+            <span>Warranty</span>
+          </div>
+
+        </div>
 
       </div>
 
+      {/* Laptop */}
       <div className="hero-image">
 
+        <div className="laptop-glow"></div>
+
         <img
-          ref={imageRef}
           src={homeImage}
           alt="Laptop"
         />
@@ -95,9 +83,7 @@ function Hero() {
       </div>
 
     </section>
-
   );
-
 }
 
 export default Hero;

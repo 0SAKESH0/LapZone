@@ -176,3 +176,22 @@
     }
 
 }
+
+.products-search-section {
+    padding: 35px 40px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(59, 130, 246, 0.12),
+            transparent 45%
+        ),
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #f4f8ff
+        );
+
+    border-bottom:
+        1px solid rgba(148, 163, 184, 0.12);
+}

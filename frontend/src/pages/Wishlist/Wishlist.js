@@ -3,7 +3,6 @@ import "./Wishlist.css";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
 import { WishlistContext } from "../../context/WishlistContext";
@@ -12,39 +11,83 @@ import { CartContext } from "../../context/CartContext";
 import {
   FaTrash,
   FaShoppingCart,
+  FaHeart,
+  FaStar,
 } from "react-icons/fa";
 
 function Wishlist() {
-
-  const {
-    wishlist,
-    addToWishlist,
-  } = useContext(WishlistContext);
+  const { wishlist, addToWishlist } =
+    useContext(WishlistContext);
 
   const { addToCart } =
     useContext(CartContext);
 
   return (
     <>
-      <Navbar />
-
       <div className="wishlist-page">
 
-        <h1>My Wishlist ❤️</h1>
+        {/* =================================
+            WISHLIST HEADER
+        ================================= */}
+
+        <div className="wishlist-header">
+
+          <h1>
+            My Wishlist
+
+            <span>
+              <FaHeart />
+            </span>
+          </h1>
+
+          <p>
+            {wishlist.length > 0
+              ? `${wishlist.length} ${
+                  wishlist.length === 1
+                    ? "laptop"
+                    : "laptops"
+                } saved for later`
+              : "Save your favorite laptops for later"}
+          </p>
+
+        </div>
+
+
+        {/* =================================
+            EMPTY WISHLIST
+        ================================= */}
 
         {wishlist.length === 0 ? (
 
-          <div className="empty">
+          <div className="wishlist-empty">
 
-            <h2>Your wishlist is empty</h2>
+            <div className="wishlist-empty-icon">
+              <FaHeart />
+            </div>
 
-            <Link to="/products">
+            <h2>
+              Your wishlist is empty
+            </h2>
+
+            <p>
+              Save laptops you love and come
+              back to them anytime.
+            </p>
+
+            <Link
+              to="/products"
+              className="browse-products-btn"
+            >
               Browse Products
             </Link>
 
           </div>
 
         ) : (
+
+          /* =================================
+             WISHLIST PRODUCTS
+          ================================= */
 
           <div className="wishlist-grid">
 
@@ -55,41 +98,89 @@ function Wishlist() {
                 key={product.id}
               >
 
-                <img
-                  src={product.image}
-                  alt={product.name}
-                />
+                {/* Discount Badge */}
 
-                <h3>{product.name}</h3>
+                {product.discount && (
+                  <span className="wishlist-discount">
+                    {product.discount}
+                  </span>
+                )}
 
-                <p>{product.brand}</p>
 
-                <h2>
-                  ₹ {product.price.toLocaleString()}
+                {/* Remove From Wishlist */}
+
+                <button
+                  className="wishlist-remove"
+                  onClick={() =>
+                    addToWishlist(product)
+                  }
+                  aria-label="Remove from wishlist"
+                >
+                  <FaTrash />
+                </button>
+
+
+                {/* Product Image */}
+
+                <Link
+                  to={`/product/${product.id}`}
+                  className="wishlist-image"
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                  />
+                </Link>
+
+
+                {/* Product Brand */}
+
+                <div className="wishlist-brand">
+                  {product.brand}
+                </div>
+
+
+                {/* Product Name */}
+
+                <h2 className="wishlist-name">
+                  {product.name}
                 </h2>
 
-                <div className="wishlist-buttons">
 
-                  <button
-                    className="cart"
-                    onClick={() =>
-                      addToCart(product)
-                    }
-                  >
-                    <FaShoppingCart />
-                    Add to Cart
-                  </button>
+                {/* Product Rating */}
 
-                  <button
-                    className="remove"
-                    onClick={() =>
-                      addToWishlist(product)
-                    }
-                  >
-                    <FaTrash />
-                  </button>
+                <div className="wishlist-rating">
+
+                  <FaStar className="star" />
+
+                  <span>
+                    {product.rating || "4.8"}
+                  </span>
 
                 </div>
+
+
+                {/* Product Price */}
+
+                <div className="wishlist-price">
+                  ₹{product.price.toLocaleString("en-IN")}
+                </div>
+
+
+                {/* Add To Cart */}
+
+                <button
+                  className="wishlist-cart"
+                  onClick={() =>
+                    addToCart(product)
+                  }
+                >
+                  <FaShoppingCart />
+
+                  <span>
+                    Add to Cart
+                  </span>
+                </button>
 
               </div>
 

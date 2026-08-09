@@ -35,66 +35,74 @@ function ProductCard({ product, isProductPage }) {
     addToWishlist(product);
   };
 
-  const ProductInfo = () => (
-    <Link
-      to={`/product/${product.id}`}
-      className="product-link"
-    >
+ const ProductInfo = () => (
+  <Link
+    to={`/product/${product.id}`}
+    className="product-link"
+  >
+
+    {product.discount && (
       <span className="discount">
         {product.discount}
       </span>
+    )}
 
-      <div className="image-box">
-        <img
-          src={product.image}
-          alt={product.name}
-        />
+    <div className="image-box">
+      <img
+        src={product.image}
+        alt={product.name}
+      />
+    </div>
+
+    <div className="product-content">
+
+      <span className="brand">
+        {product.brand}
+      </span>
+
+      <h3>{product.name}</h3>
+
+      <div className="rating">
+        <FaStar />
+        <span>{product.rating}</span>
       </div>
 
-      <div className="product-content">
-
-        <span className="brand">
-          {product.brand}
-        </span>
-
-        <h3>{product.name}</h3>
-
-        <div className="rating">
-          <FaStar />
-          <span>{product.rating}</span>
-        </div>
-
-        <h2>
-          ₹ {Number(product.price).toLocaleString()}
-        </h2>
-
-      </div>
-    </Link>
-  );
-
-  const Buttons = () => (
-    <div className="buttons">
-
-      <button
-        type="button"
-        className="cart-btn"
-        onClick={handleAddToCart}
-      >
-        <FaShoppingCart />
-        <span>Add to Cart</span>
-      </button>
-
-      <button
-        type="button"
-        className={`heart-btn ${isWishlisted ? "active" : ""}`}
-        onClick={handleWishlist}
-      >
-        <FaHeart />
-      </button>
+      <h2>
+        ₹ {Number(product.price).toLocaleString("en-IN")}
+      </h2>
 
     </div>
-  );
 
+  </Link>
+);
+
+ const Buttons = () => (
+  <div className="buttons">
+
+    <button
+      type="button"
+      className="cart-btn"
+      onClick={handleAddToCart}
+    >
+      <FaShoppingCart />
+      <span>Add to Cart</span>
+    </button>
+
+    <button
+      type="button"
+      className={`heart-btn ${isWishlisted ? "active" : ""}`}
+      onClick={handleWishlist}
+      aria-label={
+        isWishlisted
+          ? "Remove from wishlist"
+          : "Add to wishlist"
+      }
+    >
+      <FaHeart />
+    </button>
+
+  </div>
+);
   return (
     <>
       {isProductPage ? (

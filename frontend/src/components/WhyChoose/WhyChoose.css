@@ -1,103 +1,478 @@
-.why-choose{
+/* =========================================
+   WHY CHOOSE LAPZONE
+========================================= */
 
-    padding:80px 60px;
+.why-choose {
+    position: relative;
 
-    background:#f8fafc;
+    padding: 90px 6%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8faff 0%,
+            #ffffff 100%
+        );
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   BACKGROUND GLOW
+========================================= */
+
+.why-choose::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    left: -220px;
+    top: 20px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37, 99, 235, 0.09),
+            transparent 70%
+        );
+
+    filter: blur(25px);
+
+    pointer-events: none;
+}
+
+
+.why-choose::after {
+    content: "";
+
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    right: -200px;
+    bottom: -220px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(99, 102, 241, 0.08),
+            transparent 70%
+        );
+
+    filter: blur(25px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   SECTION HEADING
+========================================= */
+
+.why-choose h2 {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0 0 55px;
+
+    text-align: center;
+
+    color: #111827;
+
+    font-size: clamp(32px, 4vw, 42px);
+
+    font-weight: 800;
+
+    letter-spacing: -1.2px;
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+
+/* Heading becomes visible */
+
+.why-choose.is-visible h2 {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+/* Heading underline */
+
+.why-choose h2::after {
+    content: "";
+
+    display: block;
+
+    width: 55px;
+    height: 4px;
+
+    margin: 15px auto 0;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #6366f1
+        );
+
+    transform:
+        scaleX(0);
+
+    transform-origin: center;
+
+    transition:
+        transform 0.7s ease 0.25s;
+}
+
+
+.why-choose.is-visible h2::after {
+    transform: scaleX(1);
+}
+
+
+/* =========================================
+   FEATURE CONTAINER
+========================================= */
+
+.feature-container {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+/* =========================================
+   FEATURE CARD
+========================================= */
+
+.feature-card {
+    position: relative;
+
+    min-height: 245px;
+
+    padding: 32px 25px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    border: 1px solid #e5eaf2;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.06);
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    transform: translateY(35px);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+/* =========================================
+   SCROLL REVEAL
+========================================= */
+
+.why-choose.is-visible .feature-card {
+    animation:
+        featureReveal 0.7s ease forwards;
+
+    animation-delay:
+        var(--delay);
+}
+
+
+@keyframes featureReveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
 
 }
 
-.why-choose h2{
 
-    text-align:center;
+/* =========================================
+   CARD LIGHT EFFECT
+========================================= */
 
-    font-size:42px;
+.feature-card::before {
+    content: "";
 
-    margin-bottom:60px;
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    top: -110px;
+    right: -85px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37, 99, 235, 0.11),
+            transparent 70%
+        );
+
+    opacity: 0;
+
+    transform: scale(0.8);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.5s ease;
+
+    pointer-events: none;
+}
+
+
+.feature-card:hover::before {
+    opacity: 1;
+
+    transform: scale(1.25);
+}
+
+
+/* =========================================
+   CARD HOVER
+========================================= */
+
+.feature-card:hover {
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(37, 99, 235, 0.22);
+
+    box-shadow:
+        0 22px 45px
+        rgba(37, 99, 235, 0.12);
+}
+
+
+/* =========================================
+   FEATURE ICON
+========================================= */
+
+.feature-icon {
+    position: relative;
+
+    z-index: 2;
+
+    width: 76px;
+    height: 76px;
+
+    margin-bottom: 22px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #eff5ff;
+
+    color: #2563eb;
+
+    font-size: 31px;
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(37, 99, 235, 0.06);
+
+    transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+/* Icon hover */
+
+.feature-card:hover .feature-icon {
+    transform:
+        translateY(-4px)
+        scale(1.06);
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 12px 25px
+        rgba(37, 99, 235, 0.25);
+}
+
+
+/* =========================================
+   FEATURE TITLE
+========================================= */
+
+.feature-card h3 {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0 0 10px;
+
+    color: #172033;
+
+    font-size: 20px;
+
+    font-weight: 750;
+
+    transition:
+        color 0.3s ease;
+}
+
+
+/* =========================================
+   FEATURE DESCRIPTION
+========================================= */
+
+.feature-card p {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 230px;
+
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    transition:
+        color 0.3s ease;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1050px) {
+
+    .feature-container {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 22px;
+    }
 
 }
 
-.feature-container{
 
-    display:grid;
+/* =========================================
+   MOBILE
+========================================= */
 
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+@media (max-width: 600px) {
 
-    gap:30px;
+    .why-choose {
+        padding: 65px 20px;
+    }
 
-}
 
-.feature-card{
+    .why-choose h2 {
+        margin-bottom: 40px;
 
-    background:white;
+        font-size: 32px;
+    }
 
-    padding:35px;
 
-    border-radius:20px;
+    .feature-container {
+        grid-template-columns: 1fr;
 
-    text-align:center;
+        gap: 18px;
+    }
 
-    transition:.4s;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    .feature-card {
+        min-height: 220px;
 
-}
+        padding: 28px 22px;
+    }
 
-.feature-card:hover{
 
-    transform:translateY(-10px);
+    .feature-icon {
+        width: 70px;
+        height: 70px;
 
-    background:#2563eb;
-
-    color:white;
-
-}
-
-.feature-icon{
-
-    width:80px;
-
-    height:80px;
-
-    margin:auto;
-
-    border-radius:50%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:35px;
-
-    background:#dbeafe;
-
-    color:#2563eb;
-
-    margin-bottom:25px;
-
-    transition:.4s;
-
-}
-
-.feature-card:hover .feature-icon{
-
-    background:white;
-
-    color:#2563eb;
-
-}
-
-.feature-card h3{
-
-    margin-bottom:15px;
-
-    font-size:22px;
-
-}
-
-.feature-card p{
-
-    line-height:28px;
+        font-size: 28px;
+    }
 
 }

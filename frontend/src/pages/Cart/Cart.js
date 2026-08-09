@@ -1,13 +1,19 @@
 import "./Cart.css";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-function Cart() {
+import {
+  FaTrash,
+  FaShoppingCart,
+  FaTruck,
+  FaShieldAlt,
+  FaArrowRight,
+  FaLock,
+} from "react-icons/fa";
 
+function Cart() {
   const {
     cart,
     removeFromCart,
@@ -21,160 +27,317 @@ function Cart() {
   );
 
   const shipping = subtotal > 50000 ? 0 : 499;
-
   const tax = Math.round(subtotal * 0.18);
-
   const total = subtotal + shipping + tax;
 
   return (
     <>
-      <Navbar />
-
       <div className="cart-page">
 
-        <div className="cart-left">
+        {/* =========================================
+            ANIMATED HERO-STYLE BACKGROUND
+        ========================================= */}
 
-          <h1>Shopping Cart</h1>
+        <div className="cart-background">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
-          {cart.length === 0 ? (
+        {/* =========================================
+            MAIN CONTENT
+        ========================================= */}
 
-            <div className="empty-cart">
+        <div className="cart-container">
 
-              <h2>Your Cart is Empty</h2>
+          {/* LEFT SIDE */}
 
-              <p>Add your favourite laptop.</p>
+          <main className="cart-left">
 
+            <div className="cart-heading">
+              <span className="cart-label">
+                LAPZONE CART
+              </span>
+
+              <h1>Shopping Cart</h1>
+
+              <p>
+                {cart.length === 0
+                  ? "Your cart is waiting for something great."
+                  : `${cart.reduce(
+                      (total, item) => total + item.qty,
+                      0
+                    )} item${
+                      cart.reduce(
+                        (total, item) => total + item.qty,
+                        0
+                      ) !== 1
+                        ? "s"
+                        : ""
+                    } in your cart`}
+              </p>
             </div>
 
-          ) : (
+            {cart.length === 0 ? (
 
-            cart.map((item) => (
+              /* =====================================
+                 EMPTY CART
+              ===================================== */
 
-              <div
-                className="cart-card"
-                key={item.id}
-              >
+              <div className="empty-cart">
 
-                <img
-                  src={item.image}
-                  alt={item.name}
-                />
-
-                <div className="cart-info">
-
-                  <h2>{item.name}</h2>
-
-                  <p>{item.brand}</p>
-
-                  <h3>
-
-                    ₹ {item.price.toLocaleString()}
-
-                  </h3>
-
+                <div className="empty-cart-icon">
+                  <FaShoppingCart />
                 </div>
 
-                <div className="qty-box">
+                <h2>Your Cart is Empty</h2>
 
-                  <button
-                    onClick={() =>
-                      decreaseQty(item.id)
-                    }
-                  >
-                    -
-                  </button>
+                <p>
+                  Looks like you haven't added
+                  anything to your cart yet.
+                </p>
 
-                  <span>{item.qty}</span>
-
-                  <button
-                    onClick={() =>
-                      increaseQty(item.id)
-                    }
-                  >
-                    +
-                  </button>
-
-                </div>
-
-                <h2>
-
-                  ₹ {(item.price * item.qty).toLocaleString()}
-
-                </h2>
-
-                <button
-                  className="delete-btn"
-                  onClick={() =>
-                    removeFromCart(item.id)
-                  }
+                <Link
+                  to="/products"
+                  className="browse-btn"
                 >
-                  <FaTrash />
-                </button>
+                  Browse Laptops
+                  <FaArrowRight />
+                </Link>
+
+                <div className="cart-benefits">
+
+                  <span>
+                    <FaTruck />
+                    Fast Delivery
+                  </span>
+
+                  <span>
+                    <FaShieldAlt />
+                    Secure Shopping
+                  </span>
+
+                  <span>
+                    <FaLock />
+                    Safe Payments
+                  </span>
+
+                </div>
 
               </div>
 
-            ))
+            ) : (
 
-          )}
+              /* =====================================
+                 CART ITEMS
+              ===================================== */
 
-        </div>
+              <div className="cart-items">
 
-        <div className="summary">
+                {cart.map((item) => (
 
-          <h2>Order Summary</h2>
+                  <div
+                    className="cart-card"
+                    key={item.id}
+                  >
 
-          <div>
+                    {/* Product Image */}
 
-            <span>Subtotal</span>
+                    <Link
+                      to={`/product/${item.id}`}
+                      className="cart-image"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                      />
+                    </Link>
 
-            <span>
-              ₹ {subtotal.toLocaleString()}
+                    {/* Product Information */}
+
+                    <div className="cart-info">
+
+                      <span className="cart-brand">
+                        {item.brand}
+                      </span>
+
+                      <h2>{item.name}</h2>
+
+                      <p className="unit-price">
+                        ₹{item.price.toLocaleString("en-IN")}
+                        {" "}per item
+                      </p>
+
+                      {/* Quantity */}
+
+                      <div className="quantity-box">
+
+                        <button
+                          onClick={() =>
+                            decreaseQty(item.id)
+                          }
+                          aria-label="Decrease quantity"
+                        >
+                          −
+                        </button>
+
+                        <span>{item.qty}</span>
+
+                        <button
+                          onClick={() =>
+                            increaseQty(item.id)
+                          }
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                    {/* Item Total */}
+
+                    <div className="item-total">
+
+                      <span>ITEM TOTAL</span>
+
+                      <strong>
+                        ₹
+                        {(
+                          item.price * item.qty
+                        ).toLocaleString("en-IN")}
+                      </strong>
+
+                    </div>
+
+                    {/* Remove */}
+
+                    <button
+                      className="delete-btn"
+                      onClick={() =>
+                        removeFromCart(item.id)
+                      }
+                      aria-label="Remove item"
+                    >
+                      <FaTrash />
+                    </button>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            )}
+
+          </main>
+
+          {/* =========================================
+              ORDER SUMMARY
+          ========================================= */}
+
+          <aside className="summary">
+
+            <span className="summary-label">
+              YOUR ORDER
             </span>
 
-          </div>
+            <h2>Order Summary</h2>
 
-          <div>
+            {subtotal > 50000 && (
+              <div className="free-delivery">
+                <FaTruck />
+                <span>
+                  You've unlocked{" "}
+                  <strong>FREE delivery!</strong>
+                </span>
+              </div>
+            )}
 
-            <span>Shipping</span>
+            <div className="summary-row">
+              <span>Subtotal</span>
 
-            <span>
+              <strong>
+                ₹{subtotal.toLocaleString("en-IN")}
+              </strong>
+            </div>
 
-              {shipping === 0
-                ? "FREE"
-                : `₹${shipping}`}
+            <div className="summary-row">
+              <span>Shipping</span>
 
-            </span>
+              <strong
+                className={
+                  shipping === 0
+                    ? "free"
+                    : ""
+                }
+              >
+                {shipping === 0
+                  ? "FREE"
+                  : `₹${shipping.toLocaleString("en-IN")}`}
+              </strong>
+            </div>
 
-          </div>
+            <div className="summary-row">
+              <span>GST (18%)</span>
 
-          <div>
+              <strong>
+                ₹{tax.toLocaleString("en-IN")}
+              </strong>
+            </div>
 
-            <span>GST (18%)</span>
+            <div className="summary-divider"></div>
 
-            <span>
-              ₹ {tax.toLocaleString()}
-            </span>
+            <div className="total-row">
+              <span>Total</span>
 
-          </div>
+              <strong>
+                ₹{total.toLocaleString("en-IN")}
+              </strong>
+            </div>
 
-          <hr />
+            {cart.length > 0 ? (
 
-          <div className="grand-total">
+              <Link
+                to="/checkout"
+                className="checkout-btn"
+              >
+                <span>Proceed to Checkout</span>
+                <FaArrowRight />
+              </Link>
 
-            <span>Total</span>
+            ) : (
 
-            <span>
-              ₹ {total.toLocaleString()}
-            </span>
+              <button
+                className="checkout-btn disabled"
+                disabled
+              >
+                Cart is Empty
+              </button>
 
-          </div>
+            )}
 
-          <Link
-  to="/checkout"
-  className="checkout-btn"
->
-  Proceed to Checkout
-</Link>
+            <div className="summary-benefits">
+
+              <div>
+                <FaShieldAlt />
+                <span>Secure checkout</span>
+              </div>
+
+              <div>
+                <FaTruck />
+                <span>Fast delivery</span>
+              </div>
+
+              <div>
+                <FaLock />
+                <span>Safe payments</span>
+              </div>
+
+            </div>
+
+          </aside>
 
         </div>
 

@@ -12,6 +12,8 @@ function CartProvider({ children }) {
 
   });
 
+
+  // Save cart whenever it changes
   useEffect(() => {
 
     localStorage.setItem(
@@ -20,6 +22,11 @@ function CartProvider({ children }) {
     );
 
   }, [cart]);
+
+
+  // ==========================================
+  // ADD TO CART
+  // ==========================================
 
   const addToCart = (product) => {
 
@@ -32,7 +39,10 @@ function CartProvider({ children }) {
       setCart(
         cart.map((item) =>
           item.id === product.id
-            ? { ...item, qty: item.qty + 1 }
+            ? {
+                ...item,
+                qty: item.qty + 1,
+              }
             : item
         )
       );
@@ -51,13 +61,25 @@ function CartProvider({ children }) {
 
   };
 
+
+  // ==========================================
+  // REMOVE ONE PRODUCT
+  // ==========================================
+
   const removeFromCart = (id) => {
 
     setCart(
-      cart.filter((item) => item.id !== id)
+      cart.filter(
+        (item) => item.id !== id
+      )
     );
 
   };
+
+
+  // ==========================================
+  // INCREASE QUANTITY
+  // ==========================================
 
   const increaseQty = (id) => {
 
@@ -73,6 +95,11 @@ function CartProvider({ children }) {
     );
 
   };
+
+
+  // ==========================================
+  // DECREASE QUANTITY
+  // ==========================================
 
   const decreaseQty = (id) => {
 
@@ -92,6 +119,20 @@ function CartProvider({ children }) {
 
   };
 
+
+  // ==========================================
+  // CLEAR CART AFTER ORDER
+  // ==========================================
+
+  const clearCart = () => {
+
+    setCart([]);
+
+    localStorage.removeItem("lapzone-cart");
+
+  };
+
+
   return (
 
     <CartContext.Provider
@@ -101,6 +142,9 @@ function CartProvider({ children }) {
         removeFromCart,
         increaseQty,
         decreaseQty,
+
+        // NEW
+        clearCart,
       }}
     >
 

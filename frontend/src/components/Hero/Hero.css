@@ -1,630 +1,600 @@
-/* ===========================
-   HERO SECTION
-=========================== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
-.hero{
-
-    position:relative;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    min-height:90vh;
-
-    padding:0 8%;
-
-    overflow:hidden;
-
-    background:#020617;
-
+* {
+  box-sizing: border-box;
 }
 
-/* ===========================
-   Animated Background
-=========================== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  min-height: 560px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px 8%;
+  background: #2563eb;
+  font-family: "Poppins", sans-serif;
+  isolation: isolate;
+}
 
-.hero::before,
-.hero::after{
+/* ==========================================
+   LIQUID WAVE BACKGROUND
+========================================== */
 
-    content:"";
+.wave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #2563eb;
+  overflow: hidden;
+  z-index: 0;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.4);
+}
 
-    position:absolute;
-
-    top:50%;
-    left:50%;
-
-    width:180%;
-    height:180%;
-
-    transform:translate(-50%,-50%);
-
-    background:conic-gradient(
-        #0ea5e9,
-        #2563eb,
-        #3b82f6,
-        #60a5fa,
-        #38bdf8,
-        #2563eb,
-        #0ea5e9
+.wave::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(96, 165, 250, 0.35),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(139, 92, 246, 0.25),
+      transparent 35%
     );
-
-    filter:blur(100px);
-
-    opacity:.12;
-
-    animation:rotateGlow 18s linear infinite;
-
-    z-index:0;
-
+  z-index: 0;
 }
 
-.hero::after{
-
-    width:160%;
-    height:160%;
-
-    opacity:.08;
-
-    animation:rotateGlowReverse 28s linear infinite;
-
+.wave span {
+  position: absolute;
+  width: 325vh;
+  height: 325vh;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
 }
 
-/* ===========================
-   Content
-=========================== */
+/* Main Wave */
 
-.hero-content{
-
-    width:50%;
-
-    position:relative;
-
-    z-index:2;
-
-    animation:fadeLeft 1s ease;
-
+.wave span:nth-child(1) {
+  border-radius: 45%;
+  background: #020617;
+  animation: waveRotate 7s linear infinite;
 }
 
-.hero-content h1{
+/* Second Wave */
 
-    font-family:"Exo 2",sans-serif;
-
-    font-size:72px;
-
-    font-weight:800;
-
-    line-height:1.1;
-
-    color:#ffffff;
-
-    margin-bottom:25px;
-
+.wave span:nth-child(2) {
+  border-radius: 40%;
+  background: rgba(15, 23, 42, 0.72);
+  animation: waveRotate 11s linear infinite reverse;
 }
 
-.hero-content p{
+/* Third Wave */
 
-    color:#d1d5db;
-
-    font-size:21px;
-
-    line-height:1.8;
-
-    margin-bottom:40px;
-
+.wave span:nth-child(3) {
+  border-radius: 42.5%;
+  background: rgba(30, 41, 59, 0.55);
+  animation: waveRotate 17s linear infinite;
 }
 
-/* ===========================
-   Button
-=========================== */
+/* Soft Glow */
 
-.shop-btn{
-
-    display:inline-block;
-
-    padding:16px 42px;
-
-    background:linear-gradient(
-        135deg,
-        #2563eb,
-        #3b82f6
-    );
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:14px;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    transition:.35s;
-
-    box-shadow:
-        0 15px 35px rgba(37,99,235,.35);
-
+.wave::after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.12),
+    rgba(129, 140, 248, 0.15),
+    transparent
+  );
+  filter: blur(50px);
+  pointer-events: none;
 }
 
-.shop-btn:hover{
+@keyframes waveRotate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
 
-    transform:
-        translateY(-6px)
-        scale(1.04);
+  50% {
+    transform: translate(-50%, -75%) rotate(180deg);
+  }
 
-    box-shadow:
-        0 25px 45px rgba(37,99,235,.55);
-
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
 }
 
-/* ===========================
-   Image
-=========================== */
+/* ==========================================
+   PARTICLES
+========================================== */
 
-.hero-image{
-
-    width:45%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    position:relative;
-
-    z-index:2;
-
-    animation:fadeRight 1s ease;
-
+.particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.hero-image::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:430px;
-
-    height:430px;
-
-    border-radius:50%;
-
-    background:radial-gradient(
-        rgba(59,130,246,.45),
-        transparent 70%
-    );
-
-    filter:blur(35px);
-
-    z-index:-1;
-
+.particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #93c5fd;
+  box-shadow: 0 0 10px #60a5fa;
+  opacity: 0.5;
+  animation: particleFloat 5s ease-in-out infinite alternate;
 }
 
-.hero-image img{
+.particles span:nth-child(1) {
+  top: 20%;
+  left: 12%;
+}
 
-    width:100%;
+.particles span:nth-child(2) {
+  top: 35%;
+  left: 42%;
+  animation-delay: 1s;
+}
 
-    max-width:650px;
+.particles span:nth-child(3) {
+  top: 15%;
+  right: 25%;
+  animation-delay: 2s;
+}
 
-    animation:floatLaptop 5s ease-in-out infinite;
+.particles span:nth-child(4) {
+  top: 60%;
+  left: 8%;
+  animation-delay: 0.5s;
+}
 
+.particles span:nth-child(5) {
+  top: 70%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
+.particles span:nth-child(6) {
+  top: 45%;
+  right: 5%;
+  animation-delay: 2.5s;
+}
+
+.particles span:nth-child(7) {
+  bottom: 15%;
+  left: 35%;
+  animation-delay: 3s;
+}
+
+.particles span:nth-child(8) {
+  top: 10%;
+  left: 65%;
+  animation-delay: 1.2s;
+}
+
+@keyframes particleFloat {
+  from {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+
+  to {
+    transform: translateY(-15px);
+    opacity: 0.8;
+  }
+}
+
+/* ==========================================
+   HERO CONTENT
+========================================== */
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  width: 50%;
+  max-width: 650px;
+  color: white;
+  animation: contentReveal 1s ease-out;
+}
+
+@keyframes contentReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Badge */
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 9px 17px;
+  color: #dbeafe;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.hero-badge span {
+  color: #60a5fa;
+}
+
+/* Heading */
+
+.hero-content h1 {
+  margin: 0;
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  color: white;
+  text-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+
+.hero-content h1 span {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #38bdf8,
+    #818cf8,
+    #c4b5fd
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: textGradient 5s linear infinite;
+}
+
+@keyframes textGradient {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Paragraph */
+
+.hero-content p {
+  max-width: 590px;
+  margin: 25px 0 34px;
+  color: #cbd5e1;
+  font-size: 18px;
+  line-height: 1.8;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================
+   SHOP BUTTON
+========================================== */
+
+.shop-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 29px;
+  color: white;
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5
+  );
+  border: 1px solid rgba(147, 197, 253, 0.35);
+  border-radius: 13px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 700;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shop-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: 0.6s;
+}
+
+.shop-btn:hover::before {
+  left: 140%;
+}
+
+.shop-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(37, 99, 235, 0.55);
+}
+
+.button-arrow {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+.shop-btn:hover .button-arrow {
+  transform: translateX(6px);
+}
+
+/* ==========================================
+   HERO STATS
+========================================== */
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  margin-top: 40px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stat strong {
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.stat span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.stat:not(:last-child) {
+  padding-right: 35px;
+  border-right: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* ==========================================
+   LAPTOP SECTION
+========================================== */
+
+.hero-image {
+  position: relative;
+  z-index: 5;
+  width: 48%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  animation: imageReveal 1.2s ease-out;
+}
+
+@keyframes imageReveal {
+  from {
+    opacity: 0;
+    transform: translateX(40px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Laptop Glow */
+
+.laptop-glow {
+  position: absolute;
+  width: 430px;
+  height: 430px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.45),
+    rgba(96, 165, 250, 0.15),
+    transparent 70%
+  );
+  filter: blur(20px);
+  animation: laptopGlow 4s ease-in-out infinite alternate;
+}
+
+/* Laptop */
+
+.hero-image img {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  object-fit: contain;
+  filter: drop-shadow(
+    0 35px 45px rgba(0, 0, 0, 0.55)
+  );
+  animation: laptopFloat 6s ease-in-out infinite;
+  transition: filter 0.4s ease;
+}
+
+/* Hover Glow */
+
+.hero-image:hover img {
+  animation:
+    laptopFloat 5s ease-in-out infinite,
+    laptopHoverGlow 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes laptopHoverGlow {
+  0% {
     filter:
-        drop-shadow(0 35px 50px rgba(0,0,0,.45));
-
-}
-
-/* ===========================
-   Animations
-=========================== */
-
-@keyframes floatLaptop{
-
-    0%,100%{
-
-        transform:
-        translateY(0);
-
-    }
-
-    50%{
-
-        transform:
-        translateY(-18px);
-
-    }
-
-}
-
-@keyframes fadeLeft{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateX(-60px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
-
-@keyframes fadeRight{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateX(60px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
-
-@keyframes rotateGlow{
-
-    from{
-
-        transform:
-        translate(-50%,-50%)
-        rotate(0deg);
-
-    }
-
-    to{
-
-        transform:
-        translate(-50%,-50%)
-        rotate(360deg);
-
-    }
-
-}
-
-@keyframes rotateGlowReverse{
-
-    from{
-
-        transform:
-        translate(-50%,-50%)
-        rotate(0deg);
-
-    }
-
-    to{
-
-        transform:
-        translate(-50%,-50%)
-        rotate(-360deg);
-
-    }
-
-}
-
-/* ===========================
-   Responsive
-=========================== */
-
-@media(max-width:900px){
-
-    .hero{
-
-        flex-direction:column;
-
-        text-align:center;
-
-        padding:60px 30px;
-
-    }
-
-    .hero-content{
-
-        width:100%;
-
-        margin-bottom:50px;
-
-    }
-
-    .hero-content h1{
-
-        font-size:48px;
-
-    }
-
-    .hero-content p{
-
-        font-size:18px;
-
-    }
-
-    .hero-image{
-
-        width:100%;
-
-    }
-
-    .hero-image img{
-
-        max-width:450px;
-
-    }
-
-}
-
-/* ===========================
-   3D Laptop Effect
-=========================== */
-
-.hero-image{
-
-    perspective:1200px;
-
-}
-
-.hero-image img{
-
-    transition:
-
-        transform .25s ease,
-
-        filter .3s ease;
-
-    transform-style:preserve-3d;
-
-    cursor:pointer;
-
-}
-
-.hero-image:hover img{
-
+      drop-shadow(
+        0 0 10px rgba(96, 165, 250, 0.5)
+      )
+      drop-shadow(
+        0 25px 40px rgba(0, 0, 0, 0.5)
+      );
+  }
+
+  100% {
     filter:
-
-        drop-shadow(
-            0 45px 60px
-            rgba(37,99,235,.45)
-        );
-
+      drop-shadow(
+        0 0 25px rgba(96, 165, 250, 1)
+      )
+      drop-shadow(
+        0 0 55px rgba(37, 99, 235, 0.8)
+      )
+      drop-shadow(
+        0 25px 40px rgba(0, 0, 0, 0.5)
+      );
+  }
 }
 
-/* ==========================
-   Mouse Spotlight
-========================== */
+/* Laptop Floating */
 
-.spotlight{
+@keyframes laptopFloat {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
 
-    position:absolute;
+  25% {
+    transform: translateY(-8px) rotate(-0.4deg);
+  }
 
-    width:350px;
+  50% {
+    transform: translateY(-18px) rotate(0.3deg);
+  }
 
-    height:350px;
+  75% {
+    transform: translateY(-8px) rotate(0.4deg);
+  }
 
-    border-radius:50%;
-
-    background:radial-gradient(
-
-        rgba(59,130,246,.35),
-
-        transparent 70%
-
-    );
-
-    left:var(--x);
-
-    top:var(--y);
-
-    transform:translate(-50%,-50%);
-
-    pointer-events:none;
-
-    filter:blur(30px);
-
-    transition:left .08s linear,
-               top .08s linear;
-
-    z-index:1;
-
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
 }
 
-/* ==========================
-   Floating Particles
-========================== */
+@keyframes laptopGlow {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
 
-.particles span{
-
-    position:absolute;
-
-    width:8px;
-
-    height:8px;
-
-    border-radius:50%;
-
-    background:#60a5fa;
-
-    box-shadow:0 0 15px #3b82f6;
-
-    animation:particleFloat linear infinite;
-
+  100% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
 }
 
-.particles span:nth-child(1){
 
-    left:8%;
-    top:70%;
 
-    animation-duration:10s;
 
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 750px;
+    flex-direction: column;
+    text-align: center;
+    padding: 70px 30px;
+  }
+
+  .hero-content {
+    width: 100%;
+  }
+
+  .hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .hero-image {
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .hero-image img {
+    max-width: 450px;
+  }
+
+  .floating-spec {
+    display: none;
+  }
 }
 
-.particles span:nth-child(2){
-
-    left:28%;
-    top:90%;
-
-    animation-duration:14s;
-
-}
-
-.particles span:nth-child(3){
-
-    left:55%;
-    top:75%;
-
-    animation-duration:11s;
-
-}
-
-.particles span:nth-child(4){
-
-    left:82%;
-    top:80%;
-
-    animation-duration:15s;
-
-}
-
-.particles span:nth-child(5){
-
-    left:95%;
-    top:65%;
-
-    animation-duration:12s;
-
-}
-
-@keyframes particleFloat{
-
-    from{
-
-        transform:
-        translateY(0)
-        scale(1);
-
-        opacity:.2;
-
-    }
-
-    to{
-
-        transform:
-        translateY(-450px)
-        scale(2);
-
-        opacity:0;
-
-    }
-
-}
-
-/* ==========================
-   Text Animation
-========================== */
-
-.hero-content{
-
-    animation:fadeLeft 1s ease;
-
-}
-
-.hero-image{
-
-    animation:fadeRight 1s ease;
-
-}
-
-@keyframes fadeLeft{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateX(-80px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
-
-@keyframes fadeRight{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateX(80px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
-
-/* ==========================
-   Laptop
-========================== */
-
-.hero-image{
-
-    perspective:1400px;
-
-}
-
-.hero-image img{
-
-    transition:
-        transform .2s ease,
-        filter .3s ease;
-
-    transform-style:preserve-3d;
-
-}
-
-.hero-image img:hover{
-
-    filter:
-
-        drop-shadow(
-
-        0 35px 45px
-
-        rgba(37,99,235,.45)
-
-        );
-
+@media (max-width: 500px) {
+  .hero {
+    min-height: 700px;
+    padding: 55px 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 44px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .hero-stats {
+    gap: 15px;
+  }
+
+  .stat:not(:last-child) {
+    padding-right: 15px;
+  }
+
+  .stat strong {
+    font-size: 18px;
+  }
+
+  .hero-image img {
+    max-width: 340px;
+  }
+
+  .laptop-glow {
+    width: 300px;
+    height: 300px;
+  }
 }
