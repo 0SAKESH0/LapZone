@@ -1,49 +1,89 @@
 import "./Login.css";
 
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
 
 import { loginUser } from "../../api/authApi";
 
+
 function Login() {
 
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+
   const [loading, setLoading] = useState(false);
 
+
+  // ==========================================
+  // HANDLE INPUT
+  // ==========================================
+
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
   };
+
+
+  // ==========================================
+  // HANDLE LOGIN
+  // ==========================================
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
 
+
     try {
 
       setLoading(true);
 
+
       const res = await loginUser(formData);
 
-      localStorage.setItem("token", res.data.token);
+
+      // ========================================
+      // SAVE LOGIN DETAILS
+      // ========================================
+
+      localStorage.setItem(
+        "token",
+        res.data.token
+      );
+
 
       localStorage.setItem(
         "user",
         JSON.stringify(res.data.user)
       );
 
+
       alert("Login Successful");
 
-      navigate("/");
+
+      // ========================================
+      // RETURN TO PREVIOUS PAGE
+      // ========================================
+
+      const redirectPath =
+        location.state?.from || "/";
+
+
+      navigate(redirectPath, {
+        replace: true,
+      });
+
 
     } catch (error) {
 
@@ -60,28 +100,45 @@ function Login() {
 
   };
 
+
+  // ==========================================
+  // RETURN
+  // ==========================================
+
   return (
 
     <div className="login-container">
 
+
       <div className="blob blob1"></div>
+
       <div className="blob blob2"></div>
+
       <div className="blob blob3"></div>
+
 
       <form
         className="login-card"
         onSubmit={handleSubmit}
       >
 
+
         <div className="login-logo">
+
           <FaLaptop />
+
         </div>
 
-        <h1>Welcome Back</h1>
+
+        <h1>
+          Welcome Back
+        </h1>
+
 
         <p className="subtitle">
           Login to your LapZone account
         </p>
+
 
         <input
           type="email"
@@ -92,6 +149,7 @@ function Login() {
           required
         />
 
+
         <input
           type="password"
           name="password"
@@ -101,7 +159,11 @@ function Login() {
           required
         />
 
-        <button type="submit">
+
+        <button
+          type="submit"
+          disabled={loading}
+        >
 
           {loading
             ? "Logging in..."
@@ -109,15 +171,19 @@ function Login() {
 
         </button>
 
+
         <p>
 
           Don't have an account?
+
+          {" "}
 
           <Link to="/register">
             Register
           </Link>
 
         </p>
+
 
       </form>
 
@@ -126,5 +192,6 @@ function Login() {
   );
 
 }
+
 
 export default Login;

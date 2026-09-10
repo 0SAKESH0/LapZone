@@ -22,13 +22,18 @@ function Cart() {
   } = useContext(CartContext);
 
   const subtotal = cart.reduce(
-    (total, item) => total + item.price * item.qty,
+    (total, item) => total + Number(item.price) * item.qty,
     0
   );
 
   const shipping = subtotal > 50000 ? 0 : 499;
   const tax = Math.round(subtotal * 0.18);
   const total = subtotal + shipping + tax;
+
+  const totalItems = cart.reduce(
+    (total, item) => total + item.qty,
+    0
+  );
 
   return (
     <>
@@ -44,17 +49,21 @@ function Cart() {
           <span></span>
         </div>
 
+
         {/* =========================================
             MAIN CONTENT
         ========================================= */}
 
         <div className="cart-container">
 
-          {/* LEFT SIDE */}
+          {/* =========================================
+              LEFT SIDE
+          ========================================= */}
 
           <main className="cart-left">
 
             <div className="cart-heading">
+
               <span className="cart-label">
                 LAPZONE CART
               </span>
@@ -64,25 +73,19 @@ function Cart() {
               <p>
                 {cart.length === 0
                   ? "Your cart is waiting for something great."
-                  : `${cart.reduce(
-                      (total, item) => total + item.qty,
-                      0
-                    )} item${
-                      cart.reduce(
-                        (total, item) => total + item.qty,
-                        0
-                      ) !== 1
-                        ? "s"
-                        : ""
+                  : `${totalItems} item${
+                      totalItems !== 1 ? "s" : ""
                     } in your cart`}
               </p>
+
             </div>
 
-            {cart.length === 0 ? (
 
-              /* =====================================
-                 EMPTY CART
-              ===================================== */
+            {/* =====================================
+                EMPTY CART
+            ===================================== */}
+
+            {cart.length === 0 ? (
 
               <div className="empty-cart">
 
@@ -104,6 +107,7 @@ function Cart() {
                   Browse Laptops
                   <FaArrowRight />
                 </Link>
+
 
                 <div className="cart-benefits">
 
@@ -134,104 +138,149 @@ function Cart() {
 
               <div className="cart-items">
 
-                {cart.map((item) => (
+                {cart.map((item) => {
 
-                  <div
-                    className="cart-card"
-                    key={item.id}
-                  >
+                  const stock = Number(item.stock || 0);
 
-                    {/* Product Image */}
+                  const isMaxQuantity =
+                    item.qty >= stock;
 
-                    <Link
-                      to={`/product/${item.id}`}
-                      className="cart-image"
+                  return (
+
+                    <div
+                      className="cart-card"
+                      key={item.id}
                     >
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                      />
-                    </Link>
 
-                    {/* Product Information */}
+                      {/* Product Image */}
 
-                    <div className="cart-info">
+                      <Link
+                        to={`/product/${item.id}`}
+                        className="cart-image"
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                        />
+                      </Link>
 
-                      <span className="cart-brand">
-                        {item.brand}
-                      </span>
 
-                      <h2>{item.name}</h2>
+                      {/* Product Information */}
 
-                      <p className="unit-price">
-                        ₹{item.price.toLocaleString("en-IN")}
-                        {" "}per item
-                      </p>
+                      <div className="cart-info">
 
-                      {/* Quantity */}
+                        <span className="cart-brand">
+                          {item.brand}
+                        </span>
 
-                      <div className="quantity-box">
+                        <h2>{item.name}</h2>
 
-                        <button
-                          onClick={() =>
-                            decreaseQty(item.id)
-                          }
-                          aria-label="Decrease quantity"
-                        >
-                          −
-                        </button>
+                        <p className="unit-price">
+                          ₹
+                          {Number(item.price).toLocaleString(
+                            "en-IN"
+                          )}
+                          {" "}per item
+                        </p>
 
-                        <span>{item.qty}</span>
 
-                        <button
-                          onClick={() =>
-                            increaseQty(item.id)
-                          }
-                          aria-label="Increase quantity"
-                        >
-                          +
-                        </button>
+                        {/* Quantity */}
+
+                        <div className="quantity-box">
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              decreaseQty(item.id)
+                            }
+                            aria-label="Decrease quantity"
+                            disabled={item.qty <= 1}
+                          >
+                            −
+                          </button>
+
+                          <span>{item.qty}</span>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              increaseQty(item.id)
+                            }
+                            aria-label="Increase quantity"
+                            disabled={isMaxQuantity}
+                          >
+                            +
+                          </button>
+
+                        </div>
+
+
+                        {/* Stock Information */}
+
+                        {stock > 0 && (
+                          <p
+                            className={`cart-stock ${
+                              isMaxQuantity
+                                ? "cart-stock-max"
+                                : ""
+                            }`}
+                          >
+                            {isMaxQuantity
+                              ? `Maximum available: ${stock}`
+                              : `${stock} available`}
+                          </p>
+                        )}
+
+                        {stock <= 0 && (
+                          <p className="cart-stock cart-stock-out">
+                            Currently out of stock
+                          </p>
+                        )}
 
                       </div>
 
+
+                      {/* Item Total */}
+
+                      <div className="item-total">
+
+                        <span>ITEM TOTAL</span>
+
+                        <strong>
+                          ₹
+                          {(
+                            Number(item.price) * item.qty
+                          ).toLocaleString("en-IN")}
+                        </strong>
+
+                      </div>
+
+
+                      {/* Remove */}
+
+                      <button
+                        type="button"
+                        className="delete-btn"
+                        onClick={() =>
+                          removeFromCart(item.id)
+                        }
+                        aria-label="Remove item"
+                      >
+                        <FaTrash />
+                      </button>
+
                     </div>
 
-                    {/* Item Total */}
+                  );
 
-                    <div className="item-total">
-
-                      <span>ITEM TOTAL</span>
-
-                      <strong>
-                        ₹
-                        {(
-                          item.price * item.qty
-                        ).toLocaleString("en-IN")}
-                      </strong>
-
-                    </div>
-
-                    {/* Remove */}
-
-                    <button
-                      className="delete-btn"
-                      onClick={() =>
-                        removeFromCart(item.id)
-                      }
-                      aria-label="Remove item"
-                    >
-                      <FaTrash />
-                    </button>
-
-                  </div>
-
-                ))}
+                })}
 
               </div>
 
             )}
 
           </main>
+
 
           {/* =========================================
               ORDER SUMMARY
@@ -245,25 +294,36 @@ function Cart() {
 
             <h2>Order Summary</h2>
 
+
             {subtotal > 50000 && (
+
               <div className="free-delivery">
+
                 <FaTruck />
+
                 <span>
                   You've unlocked{" "}
                   <strong>FREE delivery!</strong>
                 </span>
+
               </div>
+
             )}
 
+
             <div className="summary-row">
+
               <span>Subtotal</span>
 
               <strong>
                 ₹{subtotal.toLocaleString("en-IN")}
               </strong>
+
             </div>
 
+
             <div className="summary-row">
+
               <span>Shipping</span>
 
               <strong
@@ -277,25 +337,34 @@ function Cart() {
                   ? "FREE"
                   : `₹${shipping.toLocaleString("en-IN")}`}
               </strong>
+
             </div>
 
+
             <div className="summary-row">
+
               <span>GST (18%)</span>
 
               <strong>
                 ₹{tax.toLocaleString("en-IN")}
               </strong>
+
             </div>
+
 
             <div className="summary-divider"></div>
 
+
             <div className="total-row">
+
               <span>Total</span>
 
               <strong>
                 ₹{total.toLocaleString("en-IN")}
               </strong>
+
             </div>
+
 
             {cart.length > 0 ? (
 
@@ -310,6 +379,7 @@ function Cart() {
             ) : (
 
               <button
+                type="button"
                 className="checkout-btn disabled"
                 disabled
               >
@@ -317,6 +387,7 @@ function Cart() {
               </button>
 
             )}
+
 
             <div className="summary-benefits">
 

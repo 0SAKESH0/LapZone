@@ -14,6 +14,10 @@ import Checkout from "../pages/Checkout/Checkout";
 import Wishlist from "../pages/Wishlist/Wishlist";
 import OrderSuccess from "../pages/OrderSuccess/OrderSuccess";
 import Loading from "../pages/Loading/Loading";
+import MigrateProducts from "../pages/MigrateProducts/MigrateProducts";
+import MyOrders from "../pages/MyOrders/MyOrders";
+import OrderDetails from "../pages/OrderDetails/OrderDetails";
+
 
 function AppRoutes() {
   return (
@@ -68,6 +72,15 @@ function AppRoutes() {
           element={<Admin />}
         />
 
+        <Route path="/my-orders" 
+        element={<MyOrders />}
+        />
+
+        <Route
+          path="/my-orders/:orderId"
+          element={<OrderDetails />}
+        />
+
         <Route
           path="/checkout"
           element={<Checkout />}
@@ -82,6 +95,11 @@ function AppRoutes() {
           path="/order-success"
           element={<OrderSuccess />}
         />
+
+        <Route
+  path="/migrate-products"
+  element={<MigrateProducts />}
+/>
 
       </Routes>
 

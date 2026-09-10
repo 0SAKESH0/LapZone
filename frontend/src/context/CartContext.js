@@ -13,7 +13,10 @@ function CartProvider({ children }) {
   });
 
 
-  // Save cart whenever it changes
+  // ==========================================
+  // SAVE CART WHENEVER IT CHANGES
+  // ==========================================
+
   useEffect(() => {
 
     localStorage.setItem(
@@ -30,46 +33,60 @@ function CartProvider({ children }) {
 
   const addToCart = (product) => {
 
-    const exist = cart.find(
-      (item) => item.id === product.id
-    );
+    const stock = Number(product.stock || 0);
 
-    if (exist) {
+    // Product is out of stock
+    if (stock <= 0) {
+      return;
+    }
 
-      setCart(
-        cart.map((item) =>
+    setCart((currentCart) => {
+
+      const exist = currentCart.find(
+        (item) => item.id === product.id
+      );
+
+      // Product already exists in cart
+      if (exist) {
+
+        // Don't allow quantity above available stock
+        if (exist.qty >= stock) {
+          return currentCart;
+        }
+
+        return currentCart.map((item) =>
           item.id === product.id
             ? {
                 ...item,
                 qty: item.qty + 1,
               }
             : item
-        )
-      );
+        );
 
-    } else {
+      }
 
-      setCart([
-        ...cart,
+      // Add new product
+      return [
+        ...currentCart,
         {
           ...product,
           qty: 1,
         },
-      ]);
+      ];
 
-    }
+    });
 
   };
 
 
   // ==========================================
-  // REMOVE ONE PRODUCT
+  // REMOVE PRODUCT
   // ==========================================
 
   const removeFromCart = (id) => {
 
-    setCart(
-      cart.filter(
+    setCart((currentCart) =>
+      currentCart.filter(
         (item) => item.id !== id
       )
     );
@@ -83,16 +100,29 @@ function CartProvider({ children }) {
 
   const increaseQty = (id) => {
 
-    setCart(
-      cart.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              qty: item.qty + 1,
-            }
-          : item
-      )
-    );
+    setCart((currentCart) => {
+
+      return currentCart.map((item) => {
+
+        if (item.id !== id) {
+          return item;
+        }
+
+        const stock = Number(item.stock || 0);
+
+        // Don't increase beyond stock
+        if (item.qty >= stock) {
+          return item;
+        }
+
+        return {
+          ...item,
+          qty: item.qty + 1,
+        };
+
+      });
+
+    });
 
   };
 
@@ -103,8 +133,9 @@ function CartProvider({ children }) {
 
   const decreaseQty = (id) => {
 
-    setCart(
-      cart.map((item) =>
+    setCart((currentCart) => {
+
+      return currentCart.map((item) =>
         item.id === id
           ? {
               ...item,
@@ -114,8 +145,9 @@ function CartProvider({ children }) {
                   : 1,
             }
           : item
-      )
-    );
+      );
+
+    });
 
   };
 
@@ -142,8 +174,6 @@ function CartProvider({ children }) {
         removeFromCart,
         increaseQty,
         decreaseQty,
-
-        // NEW
         clearCart,
       }}
     >

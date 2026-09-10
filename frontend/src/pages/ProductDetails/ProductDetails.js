@@ -1,12 +1,11 @@
 import "./ProductDetails.css";
 
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Footer from "../../components/Footer/Footer";
 
-import products from "../../data/products";
-
-import { useContext } from "react";
+import { getProductById } from "../../api/productApi";
 
 import { CartContext } from "../../context/CartContext";
 import { WishlistContext } from "../../context/WishlistContext";
@@ -21,6 +20,15 @@ import {
 
 function ProductDetails() {
 
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
+
+  // ==========================================
+  // CONTEXT
+  // ==========================================
+
   const { addToCart } =
     useContext(CartContext);
 
@@ -29,39 +37,191 @@ function ProductDetails() {
     isInWishlist,
   } = useContext(WishlistContext);
 
-  const { id } = useParams();
 
-  const navigate = useNavigate();
+  // ==========================================
+  // PRODUCT STATE
+  // ==========================================
+
+  const [product, setProduct] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState("");
 
 
-  const product = products.find(
-    (item) => item.id === Number(id)
-  );
+  // ==========================================
+  // GET PRODUCT FROM JAVA BACKEND
+  // ==========================================
+
+  useEffect(() => {
+
+    const fetchProduct = async () => {
+
+      try {
+
+        setLoading(true);
+
+        setError("");
+
+        const response =
+          await getProductById(id);
+
+        const data = response.data;
 
 
-  if (!product) {
+        // Convert Java product structure
+        // into the structure used by this page
+
+        const formattedProduct = {
+
+          id: data.id,
+
+          name: data.name,
+
+          brand: data.brand,
+
+          price: data.price,
+
+          rating: data.rating,
+
+          discount: data.discount,
+
+          category: data.category,
+
+          image: data.image,
+
+          description: data.description,
+
+
+          specs: {
+
+            processor: data.processor,
+
+            ram: data.ram,
+
+            storage: data.storage,
+
+            display: data.display,
+
+            battery: data.battery,
+
+            warranty: data.warranty,
+
+          },
+
+          stock: data.stock,
+
+        };
+
+
+        setProduct(formattedProduct);
+
+      } catch (error) {
+
+        console.error(
+          "Failed to fetch product:",
+          error
+        );
+
+        setError(
+          "Product not found"
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+
+    fetchProduct();
+
+  }, [id]);
+
+
+  // ==========================================
+  // LOADING
+  // ==========================================
+
+  if (loading) {
+
     return (
+
       <div className="product-not-found">
-        <h2>Product Not Found</h2>
+
+        <h2>
+          Loading Product...
+        </h2>
+
       </div>
+
     );
+
   }
 
 
   // ==========================================
+  // PRODUCT NOT FOUND
+  // ==========================================
+
+  if (!product || error) {
+
+    return (
+
+      <div className="product-not-found">
+
+        <h2>
+          Product Not Found
+        </h2>
+
+      </div>
+
+    );
+
+  }
+
+
+  // ==========================================
+  // STOCK
+  // ==========================================
+
+  const stock = Number(product.stock || 0);
+
+  const isOutOfStock = stock <= 0;
+
+  const isLowStock =
+    stock > 0 && stock <= 5;
+
+
+  // ==========================================
   // BUY NOW
-  // Directly go to checkout
   // ==========================================
 
   const handleBuyNow = () => {
 
+    if (isOutOfStock) {
+      return;
+    }
+
     navigate("/checkout", {
+
       state: {
+
         product: {
+
           ...product,
+
           qty: 1,
+
         },
+
       },
+
     });
 
   };
@@ -73,18 +233,25 @@ function ProductDetails() {
 
   const handleAddToCart = () => {
 
+    if (isOutOfStock) {
+      return;
+    }
+
     addToCart(product);
 
   };
 
 
+  // ==========================================
+  // PAGE
+  // ==========================================
+
   return (
+
     <>
 
-      
-
-
       <section className="details">
+
 
         {/* ==================================
             PRODUCT IMAGE
@@ -107,6 +274,7 @@ function ProductDetails() {
         ================================== */}
 
         <div className="info-section">
+
 
           <h5>
             {product.brand}
@@ -134,8 +302,37 @@ function ProductDetails() {
           {/* Price */}
 
           <h2>
-            ₹ {product.price.toLocaleString("en-IN")}
+            ₹{" "}
+            {Number(product.price)
+              .toLocaleString("en-IN")}
           </h2>
+
+
+          {/* STOCK STATUS */}
+
+          <div className="product-stock-status">
+
+            {isOutOfStock ? (
+
+              <span className="stock-out">
+                Out of Stock
+              </span>
+
+            ) : isLowStock ? (
+
+              <span className="stock-low">
+                Only {stock} left in stock
+              </span>
+
+            ) : (
+
+              <span className="stock-available">
+                In Stock
+              </span>
+
+            )}
+
+          </div>
 
 
           {/* Description */}
@@ -157,8 +354,11 @@ function ProductDetails() {
             <button
               className="buy"
               onClick={handleBuyNow}
+              disabled={isOutOfStock}
             >
-              Buy Now
+              {isOutOfStock
+                ? "Out of Stock"
+                : "Buy Now"}
             </button>
 
 
@@ -167,11 +367,14 @@ function ProductDetails() {
             <button
               className="cart"
               onClick={handleAddToCart}
+              disabled={isOutOfStock}
             >
 
               <FaShoppingCart />
 
-              Add To Cart
+              {isOutOfStock
+                ? "Out of Stock"
+                : "Add To Cart"}
 
             </button>
 
@@ -191,12 +394,17 @@ function ProductDetails() {
             >
 
               {isInWishlist(product.id) ? (
+
                 <FaHeart />
+
               ) : (
+
                 <FaRegHeart />
+
               )}
 
             </button>
+
 
           </div>
 
@@ -216,52 +424,84 @@ function ProductDetails() {
 
               <tbody>
 
+
                 <tr>
-                  <td>Processor</td>
+
+                  <td>
+                    Processor
+                  </td>
+
                   <td>
                     {product.specs.processor}
                   </td>
+
                 </tr>
 
 
                 <tr>
-                  <td>RAM</td>
+
+                  <td>
+                    RAM
+                  </td>
+
                   <td>
                     {product.specs.ram}
                   </td>
+
                 </tr>
 
 
                 <tr>
-                  <td>Storage</td>
+
+                  <td>
+                    Storage
+                  </td>
+
                   <td>
                     {product.specs.storage}
                   </td>
+
                 </tr>
 
 
                 <tr>
-                  <td>Display</td>
+
+                  <td>
+                    Display
+                  </td>
+
                   <td>
                     {product.specs.display}
                   </td>
+
                 </tr>
 
 
                 <tr>
-                  <td>Battery</td>
+
+                  <td>
+                    Battery
+                  </td>
+
                   <td>
                     {product.specs.battery}
                   </td>
+
                 </tr>
 
 
                 <tr>
-                  <td>Warranty</td>
+
+                  <td>
+                    Warranty
+                  </td>
+
                   <td>
                     {product.specs.warranty}
                   </td>
+
                 </tr>
+
 
               </tbody>
 
@@ -269,7 +509,9 @@ function ProductDetails() {
 
           </div>
 
+
         </div>
+
 
       </section>
 
@@ -277,7 +519,9 @@ function ProductDetails() {
       <Footer />
 
     </>
+
   );
+
 }
 
 

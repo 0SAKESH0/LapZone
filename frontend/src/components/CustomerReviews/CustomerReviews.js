@@ -1,9 +1,7 @@
 import "./CustomerReviews.css";
-
-import { FaStar, FaQuoteLeft, FaCheckCircle } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 function CustomerReviews() {
-
   const reviews = [
     {
       id: 1,
@@ -13,7 +11,6 @@ function CustomerReviews() {
       review:
         "Amazing laptop quality and fast delivery. Highly recommended!",
     },
-
     {
       id: 2,
       name: "Priya Singh",
@@ -22,7 +19,6 @@ function CustomerReviews() {
       review:
         "The shopping experience was smooth and customer support was excellent.",
     },
-
     {
       id: 3,
       name: "Arjun Kumar",
@@ -34,128 +30,36 @@ function CustomerReviews() {
   ];
 
   return (
-
     <section className="reviews">
 
-      {/* Section Heading */}
-
-      <div className="reviews-heading">
-
-        <span className="reviews-label">
-          CUSTOMER STORIES
-        </span>
-
-        <h2>
-          What Our Customers Say
-        </h2>
-
-        <p>
-          Real experiences from people who
-          chose LapZone for their next laptop.
-        </p>
-
-      </div>
-
-
-      {/* Reviews */}
+      <h2>What Our Customers Say</h2>
 
       <div className="review-container">
 
-        {reviews.map((review, index) => (
+        {reviews.map((review) => (
+          <div className="review-card" key={review.id}>
 
-          <article
-            className="review-card"
-            key={review.id}
-            style={{
-              "--review-delay": `${index * 0.12}s`,
-            }}
-          >
+            <img
+              src={review.image}
+              alt={review.name}
+            />
 
-            {/* Quote */}
-
-            <div className="quote-icon">
-              <FaQuoteLeft />
-            </div>
-
-
-            {/* Customer */}
-
-            <div className="review-user">
-
-              <img
-                src={review.image}
-                alt={review.name}
-              />
-
-              <div className="user-info">
-
-                <h3>
-                  {review.name}
-                </h3>
-
-                <span>
-                  Verified Customer
-                  <FaCheckCircle />
-                </span>
-
-              </div>
-
-            </div>
-
-
-            {/* Rating */}
+            <h3>{review.name}</h3>
 
             <div className="stars">
-
-              {[...Array(5)].map((_, index) => (
-
-                <FaStar
-                  key={index}
-                  className={
-                    index < review.rating
-                      ? "star-filled"
-                      : "star-empty"
-                  }
-                />
-
+              {[...Array(review.rating)].map((_, index) => (
+                <FaStar key={index} />
               ))}
-
-              <span>
-                {review.rating}.0
-              </span>
-
             </div>
 
+            <p>"{review.review}"</p>
 
-            {/* Review */}
-
-            <p className="review-text">
-              "{review.review}"
-            </p>
-
-          </article>
-
+          </div>
         ))}
 
       </div>
 
-
-      {/* Bottom Trust */}
-
-      <div className="review-trust">
-
-        <strong>
-          Trusted by laptop shoppers
-        </strong>
-
-        <span>
-          ★ 4.8 average rating
-        </span>
-
-      </div>
-
     </section>
-
   );
 }
 

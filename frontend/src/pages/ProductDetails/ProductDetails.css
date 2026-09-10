@@ -162,6 +162,27 @@
   pointer-events: none;
 }
 
+/* ==========================================
+   PRODUCT STOCK STATUS
+========================================== */
+
+.product-stock-status {
+  margin: 12px 0 18px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stock-available {
+  color: #15803d;
+}
+
+.stock-low {
+  color: #b45309;
+}
+
+.stock-out {
+  color: #dc2626;
+}
 
 /* =====================================================
    PRODUCT IMAGE

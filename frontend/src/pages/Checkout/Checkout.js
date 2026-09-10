@@ -1,9 +1,20 @@
 import "./Checkout.css";
 
-import { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useState,
+  useContext,
+  useEffect,
+} from "react";
+
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 import { CartContext } from "../../context/CartContext";
 import Footer from "../../components/Footer/Footer";
+
+import { createOrder } from "../../api/orderApi";
 
 import {
   FaTruck,
@@ -16,6 +27,43 @@ function Checkout() {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+
+  // ==========================================
+  // CHECK LOGIN
+  // ==========================================
+
+  const [checkingLogin, setCheckingLogin] =
+    useState(true);
+
+
+  useEffect(() => {
+
+    const token =
+      localStorage.getItem("token");
+
+
+    if (!token) {
+
+      navigate("/login", {
+        state: {
+          from: "/checkout",
+        },
+        replace: true,
+      });
+
+      return;
+    }
+
+
+    setCheckingLogin(false);
+
+  }, [navigate]);
+
+
+  // ==========================================
+  // CART
+  // ==========================================
 
   const {
     cart,
@@ -41,12 +89,66 @@ function Checkout() {
 
 
   // ==========================================
+  // FORM STATE
+  // ==========================================
+
+  const [formData, setFormData] = useState({
+
+    customerName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+
+  });
+
+
+  // ==========================================
+  // ORDER STATE
+  // ==========================================
+
+  const [placingOrder, setPlacingOrder] =
+    useState(false);
+
+
+  const [orderError, setOrderError] =
+    useState("");
+
+
+  // ==========================================
+  // HANDLE INPUT
+  // ==========================================
+
+  const handleChange = (e) => {
+
+    const {
+      name,
+      value,
+    } = e.target;
+
+
+    setFormData((prev) => ({
+
+      ...prev,
+
+      [name]: value,
+
+    }));
+
+  };
+
+
+  // ==========================================
   // TOTAL
   // ==========================================
 
   const subtotal = checkoutItems.reduce(
     (sum, item) =>
-      sum + item.price * item.qty,
+      sum +
+      Number(item.price) *
+      item.qty,
     0
   );
 
@@ -58,46 +160,285 @@ function Checkout() {
 
 
   const tax =
-    Math.round(subtotal * 0.18);
+    Math.round(
+      subtotal * 0.18
+    );
 
 
   const total =
-    subtotal + shipping + tax;
+    subtotal +
+    shipping +
+    tax;
 
 
   // ==========================================
   // PLACE ORDER
   // ==========================================
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
 
-    if (checkoutItems.length === 0) {
+    // Check login again before placing order
+    const token =
+      localStorage.getItem("token");
+
+
+    if (!token) {
+
+      navigate("/login", {
+        state: {
+          from: "/checkout",
+        },
+      });
+
       return;
     }
 
 
-    /*
-      If the user came from Cart,
-      clear the cart.
+    if (checkoutItems.length === 0) {
 
-      If the user used Buy Now,
-      don't touch the existing cart.
-    */
+      setOrderError(
+        "Your cart is empty."
+      );
 
-    if (!directProduct) {
-      clearCart();
+      return;
     }
 
 
-    navigate("/loading");
+    try {
+
+      setPlacingOrder(true);
+
+      setOrderError("");
+
+
+      // ========================================
+      // PREPARE ORDER ITEMS
+      // ========================================
+
+      const items =
+        checkoutItems.map(
+          (item) => ({
+
+            productId: item.id,
+
+            productName: item.name,
+
+            brand: item.brand,
+
+            price: item.price,
+
+            quantity: item.qty,
+
+          })
+        );
+
+
+      // ========================================
+      // PREPARE ORDER DATA
+      // ========================================
+
+      const orderData = {
+
+        customerName:
+          formData.customerName,
+
+        email:
+          formData.email,
+
+        phone:
+          formData.phone,
+
+        address:
+          formData.address,
+
+        city:
+          formData.city,
+
+        state:
+          formData.state,
+
+        pincode:
+          formData.pincode,
+
+        subtotal,
+
+        shipping,
+
+        tax,
+
+        total,
+
+        items,
+
+      };
+
+
+      // ========================================
+      // SEND TO JAVA BACKEND
+      // ========================================
+
+      const response =
+        await createOrder(
+          orderData
+        );
+
+
+      // ========================================
+      // SAVE LAST ORDER
+      // ========================================
+
+      localStorage.setItem(
+        "lastOrder",
+        JSON.stringify({
+
+          id:
+            response.data.id,
+
+          createdAt:
+            response.data.createdAt,
+
+        })
+      );
+
+
+      // ========================================
+      // CLEAR CART
+      // ========================================
+
+      if (!directProduct) {
+
+        clearCart();
+
+      }
+
+
+      // ========================================
+      // GO TO LOADING
+      // ========================================
+
+      navigate("/loading");
+
+
+    } catch (error) {
+
+      console.error(
+        "Order creation failed:",
+        error
+      );
+
+
+      // ========================================
+      // AUTH ERROR
+      // ========================================
+
+      if (
+        error.response?.status === 401 ||
+        error.response?.status === 403
+      ) {
+
+        localStorage.removeItem(
+          "token"
+        );
+
+        localStorage.removeItem(
+          "user"
+        );
+
+
+        setOrderError(
+          "Your session has expired. Please login again."
+        );
+
+
+        setTimeout(() => {
+
+          navigate("/login", {
+            state: {
+              from: "/checkout",
+            },
+          });
+
+        }, 1000);
+
+
+        return;
+      }
+
+
+      // ========================================
+      // BACKEND ERROR
+      // ========================================
+
+      const backendMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.response?.data;
+
+
+      if (
+        typeof backendMessage === "string" &&
+        backendMessage.trim()
+      ) {
+
+        setOrderError(
+          backendMessage
+        );
+
+      } else {
+
+        setOrderError(
+          "Unable to place your order. Please check your cart and try again."
+        );
+
+      }
+
+    } finally {
+
+      setPlacingOrder(false);
+
+    }
 
   };
 
 
+  // ==========================================
+  // LOGIN CHECK SCREEN
+  // ==========================================
+
+  if (checkingLogin) {
+
+    return (
+
+      <div className="checkout-page">
+
+        <div
+          style={{
+            width: "100%",
+            minHeight: "500px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "18px",
+            fontWeight: "600",
+          }}
+        >
+          Checking login...
+        </div>
+
+      </div>
+
+    );
+
+  }
+
+
+  // ==========================================
+  // RETURN
+  // ==========================================
+
   return (
+
     <>
-
-
 
       <section className="checkout-page">
 
@@ -107,6 +448,7 @@ function Checkout() {
         ===================================== */}
 
         <div className="checkout-left">
+
 
           <div className="checkout-heading">
 
@@ -128,10 +470,14 @@ function Checkout() {
 
           <div className="checkout-form-card">
 
+
             <form
               onSubmit={(e) => {
+
                 e.preventDefault();
+
                 handlePlaceOrder();
+
               }}
             >
 
@@ -146,7 +492,10 @@ function Checkout() {
 
                 <input
                   type="text"
+                  name="customerName"
                   placeholder="Enter your full name"
+                  value={formData.customerName}
+                  onChange={handleChange}
                   required
                 />
 
@@ -163,7 +512,10 @@ function Checkout() {
 
                 <input
                   type="email"
+                  name="email"
                   placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
 
@@ -180,7 +532,10 @@ function Checkout() {
 
                 <input
                   type="tel"
+                  name="phone"
                   placeholder="Enter your phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
                 />
 
@@ -196,8 +551,11 @@ function Checkout() {
                 </label>
 
                 <textarea
+                  name="address"
                   placeholder="House number, street, area..."
                   rows="4"
+                  value={formData.address}
+                  onChange={handleChange}
                   required
                 ></textarea>
 
@@ -208,6 +566,7 @@ function Checkout() {
 
               <div className="form-row">
 
+
                 <div className="form-group">
 
                   <label>
@@ -216,7 +575,10 @@ function Checkout() {
 
                   <input
                     type="text"
+                    name="city"
                     placeholder="City"
+                    value={formData.city}
+                    onChange={handleChange}
                     required
                   />
 
@@ -231,11 +593,15 @@ function Checkout() {
 
                   <input
                     type="text"
+                    name="state"
                     placeholder="State"
+                    value={formData.state}
+                    onChange={handleChange}
                     required
                   />
 
                 </div>
+
 
               </div>
 
@@ -250,17 +616,34 @@ function Checkout() {
 
                 <input
                   type="text"
+                  name="pincode"
                   placeholder="6-digit pincode"
                   maxLength="6"
+                  value={formData.pincode}
+                  onChange={handleChange}
                   required
                 />
 
               </div>
 
 
+              {/* Error */}
+
+              {orderError && (
+
+                <div className="order-error">
+
+                  {orderError}
+
+                </div>
+
+              )}
+
+
               {/* Delivery Information */}
 
               <div className="checkout-benefits">
+
 
                 <div>
 
@@ -294,6 +677,7 @@ function Checkout() {
 
                 </div>
 
+
               </div>
 
 
@@ -302,16 +686,24 @@ function Checkout() {
               <button
                 type="submit"
                 className="mobile-place-order"
+                disabled={
+                  placingOrder ||
+                  checkoutItems.length === 0
+                }
               >
-                Place Order
+
+                {placingOrder
+                  ? "Placing Order..."
+                  : "Place Order"}
+
               </button>
+
 
             </form>
 
           </div>
 
         </div>
-
 
 
         {/* =====================================
@@ -322,6 +714,7 @@ function Checkout() {
 
 
           <div className="summary-card">
+
 
             <div className="summary-heading">
 
@@ -340,50 +733,62 @@ function Checkout() {
 
             <div className="checkout-products">
 
-              {checkoutItems.map((item) => (
 
-                <div
-                  className="checkout-product"
-                  key={item.id}
-                >
+              {checkoutItems.map(
+                (item) => (
 
-                  <div className="checkout-product-image">
+                  <div
+                    className="checkout-product"
+                    key={item.id}
+                  >
 
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                    />
+
+                    <div className="checkout-product-image">
+
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                      />
+
+                    </div>
+
+
+                    <div className="checkout-product-info">
+
+                      <h3>
+                        {item.name}
+                      </h3>
+
+                      <p>
+                        {item.brand}
+                      </p>
+
+                      <span>
+                        Qty: {item.qty}
+                      </span>
+
+                    </div>
+
+
+                    <strong>
+
+                      ₹{" "}
+
+                      {(
+                        Number(item.price) *
+                        item.qty
+                      ).toLocaleString(
+                        "en-IN"
+                      )}
+
+                    </strong>
+
 
                   </div>
 
+                )
+              )}
 
-                  <div className="checkout-product-info">
-
-                    <h3>
-                      {item.name}
-                    </h3>
-
-                    <p>
-                      {item.brand}
-                    </p>
-
-                    <span>
-                      Qty: {item.qty}
-                    </span>
-
-                  </div>
-
-
-                  <strong>
-                    ₹{" "}
-                    {(
-                      item.price * item.qty
-                    ).toLocaleString("en-IN")}
-                  </strong>
-
-                </div>
-
-              ))}
 
             </div>
 
@@ -401,7 +806,9 @@ function Checkout() {
 
                 <strong>
                   ₹{" "}
-                  {subtotal.toLocaleString("en-IN")}
+                  {subtotal.toLocaleString(
+                    "en-IN"
+                  )}
                 </strong>
 
               </div>
@@ -420,11 +827,13 @@ function Checkout() {
                       : ""
                   }
                 >
+
                   {shipping === 0
                     ? "FREE"
                     : `₹${shipping.toLocaleString(
                         "en-IN"
                       )}`}
+
                 </strong>
 
               </div>
@@ -438,7 +847,9 @@ function Checkout() {
 
                 <strong>
                   ₹{" "}
-                  {tax.toLocaleString("en-IN")}
+                  {tax.toLocaleString(
+                    "en-IN"
+                  )}
                 </strong>
 
               </div>
@@ -457,7 +868,9 @@ function Checkout() {
 
               <strong>
                 ₹{" "}
-                {total.toLocaleString("en-IN")}
+                {total.toLocaleString(
+                  "en-IN"
+                )}
               </strong>
 
             </div>
@@ -466,15 +879,21 @@ function Checkout() {
             {/* Place order */}
 
             <button
+              type="button"
               className="place-order"
-              onClick={handlePlaceOrder}
+              onClick={
+                handlePlaceOrder
+              }
               disabled={
-                checkoutItems.length === 0
+                checkoutItems.length === 0 ||
+                placingOrder
               }
             >
 
               {checkoutItems.length === 0
                 ? "Cart is Empty"
+                : placingOrder
+                ? "Placing Order..."
                 : "Place Order"}
 
             </button>
@@ -483,6 +902,7 @@ function Checkout() {
             {/* Security */}
 
             <div className="checkout-security">
+
 
               <div>
 
@@ -516,11 +936,14 @@ function Checkout() {
 
               </div>
 
+
             </div>
+
 
           </div>
 
         </aside>
+
 
       </section>
 
@@ -528,7 +951,9 @@ function Checkout() {
       <Footer />
 
     </>
+
   );
+
 }
 
 

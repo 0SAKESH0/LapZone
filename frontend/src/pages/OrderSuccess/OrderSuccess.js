@@ -1,5 +1,6 @@
 import "./OrderSuccess.css";
 
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -10,39 +11,102 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 
+
 function OrderSuccess() {
 
-  const orderId =
-    "LZ" +
-    Math.floor(
-      100000 + Math.random() * 900000
-    );
+  const [order, setOrder] = useState(null);
 
-  const today = new Date();
+
+  // ==========================================
+  // GET LAST ORDER
+  // ==========================================
+
+  useEffect(() => {
+
+    const savedOrder =
+      localStorage.getItem("lastOrder");
+
+
+    if (savedOrder) {
+
+      try {
+
+        const data =
+          JSON.parse(savedOrder);
+
+        setOrder(data);
+
+      } catch (error) {
+
+        console.error(
+          "Failed to read order:",
+          error
+        );
+
+      }
+
+    }
+
+  }, []);
+
+
+  // ==========================================
+  // ORDER ID
+  // ==========================================
+
+  const orderId = order?.id
+    ? `LZ${String(order.id).padStart(6, "0")}`
+    : "LZ--------";
+
+
+  // ==========================================
+  // ORDER DATE
+  // ==========================================
+
+  const orderDate = order?.createdAt
+    ? new Date(order.createdAt).toLocaleDateString(
+        "en-IN"
+      )
+    : new Date().toLocaleDateString(
+        "en-IN"
+      );
+
 
   return (
+
     <div className="success-page">
 
-      {/* Decorative background */}
+
+      {/* ======================================
+          DECORATIVE BACKGROUND
+      ====================================== */}
 
       <div className="success-bg">
 
         <span className="success-orb orb-one"></span>
+
         <span className="success-orb orb-two"></span>
+
         <span className="success-orb orb-three"></span>
 
       </div>
 
 
-      {/* Main Card */}
+      {/* ======================================
+          MAIN CARD
+      ====================================== */}
 
       <div className="success-card">
 
-        {/* Success Icon */}
+
+        {/* ==================================
+            SUCCESS ICON
+        ================================== */}
 
         <div className="success-icon-wrapper">
 
           <div className="success-ring ring-one"></div>
+
           <div className="success-ring ring-two"></div>
 
           <div className="success-icon">
@@ -54,38 +118,58 @@ function OrderSuccess() {
         </div>
 
 
-        {/* Heading */}
+        {/* ==================================
+            HEADING
+        ================================== */}
 
         <span className="success-label">
           ORDER CONFIRMED
         </span>
 
+
         <h1>
+
           Order Placed
+
           <br />
-          <span>Successfully!</span>
+
+          <span>
+            Successfully!
+          </span>
+
         </h1>
 
+
         <p className="success-message">
+
           Thank you for shopping with
           <strong> LapZone</strong>.
+
           <br />
+
           Your order has been confirmed and
           is being prepared.
+
         </p>
 
 
-        {/* Order Details */}
+        {/* ==================================
+            ORDER DETAILS
+        ================================== */}
 
         <div className="order-info">
 
-          {/* Order ID */}
+
+          {/* ORDER ID */}
 
           <div className="order-info-card">
 
             <div className="info-icon">
+
               <FaBoxOpen />
+
             </div>
+
 
             <div className="info-content">
 
@@ -102,13 +186,16 @@ function OrderSuccess() {
           </div>
 
 
-          {/* Date */}
+          {/* ORDER DATE */}
 
           <div className="order-info-card">
 
             <div className="info-icon">
+
               <FaCalendarAlt />
+
             </div>
+
 
             <div className="info-content">
 
@@ -117,9 +204,7 @@ function OrderSuccess() {
               </span>
 
               <h3>
-                {today.toLocaleDateString(
-                  "en-IN"
-                )}
+                {orderDate}
               </h3>
 
             </div>
@@ -127,13 +212,16 @@ function OrderSuccess() {
           </div>
 
 
-          {/* Delivery */}
+          {/* DELIVERY */}
 
           <div className="order-info-card delivery-card">
 
             <div className="info-icon delivery-icon">
+
               <FaTruck />
+
             </div>
+
 
             <div className="info-content">
 
@@ -149,16 +237,22 @@ function OrderSuccess() {
 
           </div>
 
+
         </div>
 
 
-        {/* Delivery Status */}
+        {/* ==================================
+            DELIVERY STATUS
+        ================================== */}
 
         <div className="delivery-status">
 
           <div className="status-check">
+
             <FaCheckCircle />
+
           </div>
+
 
           <div>
 
@@ -176,7 +270,9 @@ function OrderSuccess() {
         </div>
 
 
-        {/* Buttons */}
+        {/* ==================================
+            BUTTONS
+        ================================== */}
 
         <div className="success-buttons">
 
@@ -184,26 +280,40 @@ function OrderSuccess() {
             to="/products"
             className="shop-btn"
           >
-            Continue Shopping
-            <span>→</span>
-          </Link>
 
-          
+            Continue Shopping
+
+            <span>
+              →
+            </span>
+
+          </Link>
 
         </div>
 
 
-        {/* Bottom message */}
+        {/* ==================================
+            FOOTER MESSAGE
+        ================================== */}
 
         <p className="success-footer">
+
           Need help with your order?
-          <span> Contact LapZone Support</span>
+
+          <span>
+            {" "}Contact LapZone Support
+          </span>
+
         </p>
+
 
       </div>
 
     </div>
+
   );
+
 }
+
 
 export default OrderSuccess;

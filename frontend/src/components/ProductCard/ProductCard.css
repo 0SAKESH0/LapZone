@@ -332,9 +332,9 @@
 .product-card .buttons {
     width: 100%;
 
-    display: flex;
+    display: grid !important;
 
-    align-items: center;
+    grid-template-columns: 1fr 52px;
 
     gap: 10px;
 
@@ -345,6 +345,253 @@
     z-index: 20;
 }
 
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+.product-card .cart-btn {
+    grid-column: 1 / -1;
+
+    width: 100% !important;
+
+    min-width: 0;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #ffffff;
+
+    color: #2563eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.product-card .cart-btn svg {
+    width: 17px;
+
+    height: 17px;
+
+    flex-shrink: 0;
+}
+
+
+.product-card .cart-btn:hover {
+    transform: translateY(-3px);
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 10px 22px rgba(
+            37,
+            99,
+            235,
+            0.35
+        );
+}
+
+
+.product-card .cart-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   BUY NOW
+========================================= */
+
+.product-card .buy-now-btn {
+    grid-column: 1;
+
+    width: 100% !important;
+
+    min-width: 0;
+
+    height: 50px;
+
+    padding: 0 12px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #111827;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.product-card .buy-now-btn:hover {
+    transform: translateY(-3px);
+
+    background: #020617;
+
+    box-shadow:
+        0 10px 22px rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+}
+
+
+.product-card .buy-now-btn:active {
+    transform: translateY(0);
+}
+
+
+.product-card .buy-now-btn svg {
+    width: 14px;
+
+    height: 14px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================
+   HEART
+========================================= */
+
+.product-card .heart-btn {
+    grid-column: 2;
+
+    width: 52px !important;
+
+    height: 50px;
+
+    min-width: 52px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #ffffff;
+
+    color: #94a3b8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.product-card .heart-btn svg {
+    width: 20px;
+
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+
+.product-card .heart-btn:hover {
+    color: #ef4444;
+
+    transform:
+        translateY(-3px)
+        scale(1.05);
+
+    box-shadow:
+        0 9px 20px rgba(
+            239,
+            68,
+            68,
+            0.2
+        );
+}
+
+
+/* =========================================
+   ACTIVE WISHLIST
+========================================= */
+
+.product-card .heart-btn.active {
+    background: #ef4444;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 9px 22px rgba(
+            239,
+            68,
+            68,
+            0.35
+        );
+}
+
+
+/* =========================================
+   OUT OF STOCK
+========================================= */
+
+.product-card .out-of-stock-btn {
+    cursor: not-allowed;
+
+    opacity: 0.6;
+}
 /* =========================================
    CART BUTTON
 ========================================= */
@@ -485,6 +732,60 @@
 
 .product-card .heart-btn.active svg {
     transform: scale(1.08);
+}
+
+.out-of-stock-btn {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ==========================================
+   BUY NOW BUTTON
+========================================== */
+
+.buy-now-btn {
+  border: none;
+  background: #111827;
+  color: white;
+
+  height: 62px;
+  padding: 0 20px;
+
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+  white-space: nowrap;
+}
+
+
+.buy-now-btn:hover {
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+
+.buy-now-btn:active {
+  transform: translateY(0);
+}
+
+
+.buy-now-btn svg {
+  font-size: 14px;
 }
 
 /* =========================================

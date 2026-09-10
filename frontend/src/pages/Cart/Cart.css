@@ -977,6 +977,35 @@
   color: #2563eb;
 }
 
+/* ==========================================
+   CART STOCK STATUS
+========================================== */
+
+.cart-stock {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #15803d;
+}
+
+.cart-stock-max {
+  color: #b45309;
+}
+
+.cart-stock-out {
+  color: #dc2626;
+}
+
+
+/* ==========================================
+   QUANTITY BUTTON STATES
+========================================== */
+
+.quantity-box button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 
 /* =========================================================
    ANIMATIONS

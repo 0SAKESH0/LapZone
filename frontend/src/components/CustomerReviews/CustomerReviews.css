@@ -1,515 +1,95 @@
-/* =========================================
-   CUSTOMER REVIEWS
-========================================= */
+.reviews{
 
-.reviews {
-    position: relative;
+    padding:80px 60px;
 
-    padding: 95px 6%;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #f7faff 100%
-        );
-
-    overflow: hidden;
-}
-
-
-/* =========================================
-   BACKGROUND GLOW
-========================================= */
-
-.reviews::before {
-    content: "";
-
-    position: absolute;
-
-    width: 500px;
-    height: 500px;
-
-    left: -230px;
-    top: 80px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(37, 99, 235, 0.07),
-            transparent 70%
-        );
-
-    filter: blur(30px);
-
-    pointer-events: none;
-}
-
-
-.reviews::after {
-    content: "";
-
-    position: absolute;
-
-    width: 450px;
-    height: 450px;
-
-    right: -200px;
-    bottom: -200px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(99, 102, 241, 0.07),
-            transparent 70%
-        );
-
-    filter: blur(30px);
-
-    pointer-events: none;
-}
-
-
-/* =========================================
-   HEADING
-========================================= */
-
-.reviews-heading {
-    position: relative;
-
-    z-index: 2;
-
-    text-align: center;
-
-    max-width: 650px;
-
-    margin: 0 auto 55px;
-}
-
-
-.reviews-label {
-    display: inline-block;
-
-    margin-bottom: 12px;
-
-    color: #2563eb;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-}
-
-
-.reviews-heading h2 {
-    margin: 0;
-
-    color: #111827;
-
-    font-size: clamp(32px, 4vw, 42px);
-
-    font-weight: 800;
-
-    letter-spacing: -1.2px;
-}
-
-
-.reviews-heading h2::after {
-    content: "";
-
-    display: block;
-
-    width: 55px;
-    height: 4px;
-
-    margin: 15px auto 0;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #2563eb,
-            #6366f1
-        );
-}
-
-
-.reviews-heading p {
-    margin: 18px auto 0;
-
-    color: #718096;
-
-    font-size: 15px;
-
-    line-height: 1.7;
-}
-
-
-/* =========================================
-   REVIEW GRID
-========================================= */
-
-.review-container {
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 25px;
-}
-
-
-/* =========================================
-   REVIEW CARD
-========================================= */
-
-.review-card {
-    position: relative;
-
-    min-height: 285px;
-
-    padding: 28px;
-
-    box-sizing: border-box;
-
-    background:
-        rgba(255, 255, 255, 0.94);
-
-    border: 1px solid #e3e8f1;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 12px 32px
-        rgba(15, 23, 42, 0.06);
-
-    overflow: hidden;
-
-    opacity: 0;
-
-    transform: translateY(30px);
-
-    animation:
-        reviewReveal 0.7s ease forwards;
-
-    animation-delay:
-        var(--review-delay);
-
-    transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease,
-        border-color 0.35s ease;
-}
-
-
-@keyframes reviewReveal {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
+    background:#f8fafc;
 
 }
 
+.reviews h2{
 
-/* =========================================
-   CARD HOVER
-========================================= */
+    text-align:center;
 
-.review-card:hover {
-    transform:
-        translateY(-8px);
+    font-size:42px;
 
-    border-color:
-        rgba(37, 99, 235, 0.18);
-
-    box-shadow:
-        0 22px 45px
-        rgba(37, 99, 235, 0.11);
-}
-
-
-/* =========================================
-   QUOTE ICON
-========================================= */
-
-.quote-icon {
-    position: absolute;
-
-    top: 22px;
-    right: 24px;
-
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background: #eff5ff;
-
-    color: #2563eb;
-
-    font-size: 15px;
-
-    transition:
-        transform 0.3s ease,
-        background 0.3s ease;
-}
-
-
-.review-card:hover .quote-icon {
-    transform:
-        rotate(-5deg)
-        scale(1.05);
-
-    background: #e5efff;
-}
-
-
-/* =========================================
-   CUSTOMER
-========================================= */
-
-.review-user {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    margin-bottom: 20px;
-}
-
-
-.review-user img {
-    width: 58px;
-    height: 58px;
-
-    flex-shrink: 0;
-
-    object-fit: cover;
-
-    border-radius: 50%;
-
-    border: 3px solid #e8f0ff;
-
-    box-shadow:
-        0 5px 15px
-        rgba(37, 99, 235, 0.12);
-}
-
-
-.user-info h3 {
-    margin: 0 0 5px;
-
-    color: #172033;
-
-    font-size: 17px;
-
-    font-weight: 750;
-}
-
-
-.user-info span {
-    display: flex;
-
-    align-items: center;
-
-    gap: 5px;
-
-    color: #7b8ba3;
-
-    font-size: 11px;
-
-    font-weight: 600;
-}
-
-
-.user-info svg {
-    color: #2563eb;
-
-    font-size: 11px;
-}
-
-
-/* =========================================
-   STARS
-========================================= */
-
-.stars {
-    display: flex;
-
-    align-items: center;
-
-    gap: 4px;
-
-    margin-bottom: 18px;
-}
-
-
-.stars svg {
-    font-size: 13px;
-}
-
-
-.star-filled {
-    color: #f5b301;
-}
-
-
-.star-empty {
-    color: #d9e0ea;
-}
-
-
-.stars span {
-    margin-left: 5px;
-
-    color: #64748b;
-
-    font-size: 12px;
-
-    font-weight: 700;
-}
-
-
-/* =========================================
-   REVIEW TEXT
-========================================= */
-
-.review-text {
-    margin: 0;
-
-    color: #526176;
-
-    font-size: 14px;
-
-    line-height: 1.8;
-}
-
-
-/* =========================================
-   TRUST LINE
-========================================= */
-
-.review-trust {
-    position: relative;
-
-    z-index: 2;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 25px;
-
-    margin-top: 42px;
-
-    color: #718096;
-
-    font-size: 13px;
-}
-
-
-.review-trust strong {
-    color: #172033;
-
-    font-weight: 750;
-}
-
-
-.review-trust span {
-    color: #2563eb;
-
-    font-weight: 700;
-}
-
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 950px) {
-
-    .review-container {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+    margin-bottom:60px;
 
 }
 
+.review-container{
 
-/* =========================================
-   MOBILE
-========================================= */
+    display:grid;
 
-@media (max-width: 650px) {
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
 
-    .reviews {
-        padding: 65px 20px;
-    }
+    gap:30px;
 
+}
 
-    .reviews-heading {
-        margin-bottom: 40px;
-    }
+.review-card{
 
+    background:white;
 
-    .reviews-heading h2 {
-        font-size: 32px;
-    }
+    padding:35px;
 
+    border-radius:20px;
 
-    .review-container {
-        grid-template-columns: 1fr;
+    text-align:center;
 
-        gap: 18px;
-    }
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
 
+    transition:.4s;
 
-    .review-card {
-        min-height: 250px;
+}
 
-        padding: 25px;
-    }
+.review-card:hover{
 
+    transform:translateY(-10px);
 
-    .review-trust {
-        flex-direction: column;
+    box-shadow:0 20px 40px rgba(37,99,235,.25);
 
-        gap: 8px;
+}
 
-        margin-top: 30px;
-    }
+.review-card img{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    margin-bottom:20px;
+
+    border:4px solid #2563eb;
+
+}
+
+.review-card h3{
+
+    margin-bottom:10px;
+
+}
+
+.stars{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:5px;
+
+    color:#facc15;
+
+    margin-bottom:20px;
+
+}
+
+.review-card p{
+
+    line-height:28px;
+
+    color:#555;
 
 }

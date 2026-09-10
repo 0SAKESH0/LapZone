@@ -1,0 +1,421 @@
+.order-details-page {
+  min-height: 100vh;
+  padding: 120px 8% 80px;
+  background: #f7f8fa;
+}
+
+
+/* ==========================================
+   TOP
+========================================== */
+
+.order-details-top {
+  max-width: 1100px;
+  margin: 0 auto 30px;
+}
+
+.back-orders-btn {
+  border: none;
+  background: transparent;
+
+  color: #555;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.back-orders-btn:hover {
+  color: #111;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.order-details-header {
+  max-width: 1100px;
+  margin: 0 auto 35px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-details-header span {
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: #999;
+}
+
+.order-details-header h1 {
+  margin: 8px 0;
+
+  font-size: 38px;
+  color: #111;
+}
+
+.order-details-header p {
+  margin: 0;
+
+  color: #777;
+  font-size: 14px;
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.details-status {
+  padding: 10px 18px;
+
+  border-radius: 20px;
+
+  background: #eaf7ef;
+  color: #218838;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ==========================================
+   GRID
+========================================== */
+
+.order-details-grid {
+  max-width: 1100px;
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: 1.6fr 1fr;
+
+  gap: 25px;
+
+  align-items: start;
+}
+
+
+/* ==========================================
+   CARD
+========================================== */
+
+.details-card {
+  background: white;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 16px;
+
+  padding: 25px;
+
+  margin-bottom: 25px;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.details-card h2 {
+  margin: 0 0 20px;
+
+  font-size: 19px;
+  color: #111;
+}
+
+
+/* ==========================================
+   CARD HEADER
+========================================== */
+
+.details-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 5px;
+}
+
+.details-card-header h2 {
+  margin: 0;
+}
+
+.details-card-header span {
+  font-size: 13px;
+  color: #888;
+}
+
+
+/* ==========================================
+   ITEMS
+========================================== */
+
+.details-items {
+  border-top: 1px solid #eee;
+}
+
+.details-item {
+  display: grid;
+
+  grid-template-columns: 1fr 80px 120px;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px 0;
+
+  border-bottom: 1px solid #eee;
+}
+
+.details-item-info h3 {
+  margin: 0;
+
+  font-size: 16px;
+  color: #222;
+}
+
+.details-item-info p {
+  margin: 5px 0 0;
+
+  font-size: 13px;
+  color: #888;
+}
+
+.details-item-qty {
+  font-size: 13px;
+  color: #777;
+}
+
+.details-item-price {
+  text-align: right;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+/* ==========================================
+   ADDRESS
+========================================== */
+
+.address-details {
+  line-height: 1.7;
+
+  color: #555;
+}
+
+.address-details strong {
+  color: #222;
+}
+
+.address-details p {
+  margin: 3px 0;
+}
+
+
+/* ==========================================
+   SUMMARY
+========================================== */
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+
+  font-size: 14px;
+}
+
+.summary-row span {
+  color: #777;
+}
+
+.summary-row strong {
+  color: #222;
+}
+
+.summary-divider {
+  height: 1px;
+
+  background: #eee;
+
+  margin: 20px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-total span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.summary-total strong {
+  font-size: 23px;
+  color: #111;
+}
+
+
+/* ==========================================
+   CUSTOMER
+========================================== */
+
+.customer-details p {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  margin: 0 0 17px;
+}
+
+.customer-details p:last-child {
+  margin-bottom: 0;
+}
+
+.customer-details span {
+  font-size: 12px;
+  color: #999;
+}
+
+.customer-details strong {
+  font-size: 14px;
+  color: #222;
+}
+
+
+/* ==========================================
+   LOADING
+========================================== */
+
+.order-details-loading {
+  min-height: 500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-details-loading h2 {
+  color: #555;
+}
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+.order-details-error {
+  max-width: 600px;
+
+  margin: 100px auto;
+
+  text-align: center;
+}
+
+.order-details-error h1 {
+  margin-bottom: 10px;
+}
+
+.order-details-error p {
+  color: #777;
+
+  margin-bottom: 25px;
+}
+
+.order-details-error button {
+  border: none;
+
+  background: #111;
+  color: white;
+
+  padding: 12px 22px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+/* ==========================================
+   CANCEL ORDER
+========================================== */
+
+.cancel-order-card {
+  margin-top: 20px;
+}
+
+.cancel-order-text {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 8px 0 18px;
+}
+
+.cancel-order-btn {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1px solid #d32f2f;
+  border-radius: 8px;
+  background: white;
+  color: #d32f2f;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-order-btn:hover {
+  background: #d32f2f;
+  color: white;
+}
+
+.cancel-order-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 800px) {
+
+  .order-details-page {
+    padding: 100px 5% 60px;
+  }
+
+  .order-details-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .order-details-header h1 {
+    font-size: 30px;
+  }
+
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-item {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .details-item-price {
+    text-align: left;
+  }
+
+}

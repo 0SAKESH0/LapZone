@@ -1,6 +1,8 @@
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
+
 import { CartContext } from "../../context/CartContext";
 import { WishlistContext } from "../../context/WishlistContext";
 
@@ -13,102 +15,364 @@ import {
   FaRegHeart,
 } from "react-icons/fa";
 
+
 function Navbar() {
+
+  const navigate = useNavigate();
+
   const { cart } = useContext(CartContext);
   const { wishlist } = useContext(WishlistContext);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
+
+  // ==========================================
+  // CART COUNT
+  // ==========================================
 
   const cartCount = cart.reduce(
     (sum, item) => sum + item.qty,
     0
   );
 
+
+  // ==========================================
+  // LOGIN STATUS
+  // ==========================================
+
+  const token = localStorage.getItem("token");
+
+  const storedUser = localStorage.getItem("user");
+
+  let user = null;
+
+  try {
+
+    user = storedUser
+      ? JSON.parse(storedUser)
+      : null;
+
+  } catch (error) {
+
+    user = null;
+
+  }
+
+
+  // ==========================================
+  // ADMIN CHECK
+  // ==========================================
+
+  const isAdmin =
+    Boolean(token) &&
+    user &&
+    String(user.role).toLowerCase() === "admin";
+
+
+  // ==========================================
+  // LOGOUT
+  // ==========================================
+
+  const handleLogout = () => {
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    setProfileOpen(false);
+    setMenuOpen(false);
+
+    navigate("/login");
+
+  };
+
+
+  // ==========================================
+  // CLOSE MOBILE MENU
+  // ==========================================
+
+  const closeMenu = () => {
+
+    setMenuOpen(false);
+
+  };
+
+
   return (
+
     <nav className="navbar">
 
-      {/* Logo */}
-      <Link to="/" className="navbar-logo">
+
+      {/* ======================================
+          LOGO
+      ====================================== */}
+
+      <Link
+        to="/"
+        className="navbar-logo"
+        onClick={closeMenu}
+      >
+
         <FaLaptop />
-        <span>LapZone</span>
+
+        <span>
+          LapZone
+        </span>
+
       </Link>
 
-      {/* Navigation */}
-      <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
+
+      {/* ======================================
+          NAVIGATION
+      ====================================== */}
+
+      <div
+        className={`navbar-links ${
+          menuOpen ? "active" : ""
+        }`}
+      >
+
+
+        {/* ====================================
+            HOME
+        ==================================== */}
 
         <Link
           to="/"
-          onClick={() => setMenuOpen(false)}
+          onClick={closeMenu}
         >
           Home
         </Link>
 
+
+        {/* ====================================
+            PRODUCTS
+        ==================================== */}
+
         <Link
           to="/products"
-          onClick={() => setMenuOpen(false)}
+          onClick={closeMenu}
         >
           Products
         </Link>
 
-        {/* Wishlist */}
+
+        {/* ====================================
+            WISHLIST
+        ==================================== */}
+
         <Link
           to="/wishlist"
           className="nav-icon"
           aria-label={`Wishlist: ${wishlist.length} item${
             wishlist.length === 1 ? "" : "s"
           }`}
-          onClick={() => setMenuOpen(false)}
+          onClick={closeMenu}
         >
+
           <FaRegHeart />
 
           {wishlist.length > 0 && (
+
             <span className="nav-badge">
               {wishlist.length}
             </span>
+
           )}
+
         </Link>
 
-        {/* Cart */}
+
+        {/* ====================================
+            CART
+        ==================================== */}
+
         <Link
           to="/cart"
           className="nav-icon"
           aria-label={`Cart: ${cartCount} item${
             cartCount === 1 ? "" : "s"
           }`}
-          onClick={() => setMenuOpen(false)}
+          onClick={closeMenu}
         >
+
           <FaShoppingCart />
 
           {cartCount > 0 && (
+
             <span className="nav-badge">
               {cartCount}
             </span>
+
           )}
+
         </Link>
 
-        {/* Profile */}
-        <Link
-          to="/login"
-          className="nav-icon"
-          aria-label="Profile"
-          onClick={() => setMenuOpen(false)}
-        >
-          <FaUserCircle />
-        </Link>
+
+        {/* ====================================
+            PROFILE
+        ==================================== */}
+
+        <div className="profile-menu">
+
+
+          {/* USER ICON */}
+
+          <button
+            className="profile-icon-btn"
+            onClick={() =>
+              setProfileOpen(!profileOpen)
+            }
+            aria-label="Account menu"
+          >
+
+            <FaUserCircle />
+
+          </button>
+
+
+          {/* ==================================
+              PROFILE DROPDOWN
+          ================================== */}
+
+          {profileOpen && (
+
+            <div className="profile-dropdown">
+
+
+              {token ? (
+
+                <>
+
+
+                  {/* ==================================
+                      MY PROFILE
+                  ================================== */}
+
+                  <Link
+                    to="/profile"
+                    onClick={() => {
+
+                      setProfileOpen(false);
+                      closeMenu();
+
+                    }}
+                  >
+                    My Profile
+                  </Link>
+
+
+                  {/* ==================================
+                      MY ORDERS
+                  ================================== */}
+
+                  <Link
+                    to="/my-orders"
+                    onClick={() => {
+
+                      setProfileOpen(false);
+                      closeMenu();
+
+                    }}
+                  >
+                    My Orders
+                  </Link>
+
+
+                  {/* ==================================
+                      ADMIN DASHBOARD
+                  ================================== */}
+
+                  {isAdmin && (
+
+                    <Link
+                      to="/admin"
+                      onClick={() => {
+
+                        setProfileOpen(false);
+                        closeMenu();
+
+                      }}
+                    >
+                      Admin Dashboard
+                    </Link>
+
+                  )}
+
+
+                  {/* ==================================
+                      LOGOUT
+                  ================================== */}
+
+                  <button
+                    className="logout-btn"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+
+
+                </>
+
+              ) : (
+
+
+                /* ==================================
+                   NOT LOGGED IN
+                ================================== */
+
+                <Link
+                  to="/login"
+                  onClick={() => {
+
+                    setProfileOpen(false);
+                    closeMenu();
+
+                  }}
+                >
+                  Login
+                </Link>
+
+              )}
+
+            </div>
+
+          )}
+
+        </div>
+
 
       </div>
 
-      {/* Mobile Menu */}
+
+      {/* ======================================
+          MOBILE MENU
+      ====================================== */}
+
       <button
         className="menu-btn"
-        onClick={() => setMenuOpen(!menuOpen)}
+        onClick={() => {
+
+          setMenuOpen(!menuOpen);
+          setProfileOpen(false);
+
+        }}
         aria-label="Toggle menu"
       >
-        {menuOpen ? <FaTimes /> : <FaBars />}
+
+        {menuOpen
+          ? <FaTimes />
+          : <FaBars />
+        }
+
       </button>
 
+
     </nav>
+
   );
+
 }
+
 
 export default Navbar;
