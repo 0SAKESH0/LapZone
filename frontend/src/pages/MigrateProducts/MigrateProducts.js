@@ -34,7 +34,7 @@ function MigrateProducts() {
       }));
 
       const response = await axios.post(
-        "http://localhost:8080/api/products/bulk",
+        "https://lapzone-hq43.onrender.com/api/products/bulk",
         productsForBackend
       );
 
