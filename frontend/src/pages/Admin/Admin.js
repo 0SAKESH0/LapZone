@@ -18,7 +18,6 @@ import {
 import { getDashboardStats } from "../../api/adminDashboardApi";
 import {
   getAllCustomers,
-  getCustomerDetails,
 } from "../../api/adminCustomerApi";
 
 function Admin() {
@@ -39,9 +38,7 @@ function Admin() {
     useState("");
   const [customerSearch, setCustomerSearch] =
     useState("");
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [customerDetailsLoading, setCustomerDetailsLoading] = useState(false);
-  const [customerDetailsError, setCustomerDetailsError] = useState("");
+  
 
   // Product search
   const [productSearch, setProductSearch] =
@@ -576,50 +573,6 @@ function Admin() {
       }
     );
 
-    // ==========================================
-// CUSTOMER DETAILS
-// ==========================================
-
-const openCustomerDetails = async (customerId) => {
-  try {
-    setCustomerDetailsLoading(true);
-    setCustomerDetailsError("");
-    setSelectedCustomer(null);
-
-    const response = await getCustomerDetails(customerId);
-
-    setSelectedCustomer(response.data);
-  } catch (error) {
-    console.error(
-      "Failed to fetch customer details:",
-      error
-    );
-
-    if (
-      error.response?.status === 401 ||
-      error.response?.status === 403
-    ) {
-      setCustomerDetailsError(
-        "You do not have permission to view this customer."
-      );
-    } else if (error.response?.status === 404) {
-      setCustomerDetailsError(
-        "Customer not found."
-      );
-    } else {
-      setCustomerDetailsError(
-        "Unable to load customer details."
-      );
-    }
-  } finally {
-    setCustomerDetailsLoading(false);
-  }
-};
-
-const closeCustomerDetails = () => {
-  setSelectedCustomer(null);
-  setCustomerDetailsError("");
-};
 
   // ==========================================
   // ORDER DETAILS
@@ -1492,14 +1445,6 @@ const closeCustomerDetails = () => {
                   <div
   key={customer.id}
   className="admin-customer-card"
-  onClick={() => openCustomerDetails(customer.id)}
-  role="button"
-  tabIndex={0}
-  onKeyDown={(e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      openCustomerDetails(customer.id);
-    }
-  }}
 >
 
                     {/* AVATAR */}
