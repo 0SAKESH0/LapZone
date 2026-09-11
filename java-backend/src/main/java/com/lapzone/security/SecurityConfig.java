@@ -55,8 +55,10 @@ public class SecurityConfig {
                                 org.springframework.http.HttpMethod.OPTIONS,
                                 "/**"
                         ).permitAll()
+
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
 
@@ -80,7 +82,10 @@ public class SecurityConfig {
                 new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:3000")
+                List.of(
+                        "http://localhost:3000",
+                        "https://lap-zone-gilt.vercel.app"
+                )
         );
 
         configuration.setAllowedMethods(
