@@ -54,14 +54,14 @@ function CartProvider({ children }) {
           return currentCart;
         }
 
-        return currentCart.map((item) =>
-          item.id === product.id
-            ? {
-                ...item,
-                qty: item.qty + 1,
-              }
-            : item
-        );
+       return currentCart.map((item) =>
+  item.id === product.id
+    ? {
+        ...item,
+        qty: item.qty + 1,
+      }
+    : item
+);
 
       }
 

@@ -960,68 +960,68 @@ function Admin() {
       </div>
 
       {/* ======================================
-          ORDER OVERVIEW
-      ====================================== */}
+    ORDER OVERVIEW
+====================================== */}
 
-      <div className="admin-order-overview">
+<div className="dashboard-status-section">
 
-        <div className="admin-section-heading">
+  <div className="dashboard-status-header">
 
-          <div>
+    <div>
 
-            <h2>
-              Order Overview
-            </h2>
+      <h2>
+        Order Overview
+      </h2>
 
-            <p>
-              Current order status
-              across the store.
-            </p>
+      <p>
+        Current order status
+        across the store.
+      </p>
 
-          </div>
+    </div>
 
-        </div>
+  </div>
 
-        <div className="admin-order-overview-grid">
+  <div className="dashboard-status-grid">
 
-          <div className="admin-order-overview-card">
-            <span>Placed</span>
-            <strong>
-              {placedOrders}
-            </strong>
-          </div>
+    <div className="dashboard-status-card">
+      <span>Placed</span>
+      <strong>
+        {placedOrders}
+      </strong>
+    </div>
 
-          <div className="admin-order-overview-card">
-            <span>Confirmed</span>
-            <strong>
-              {confirmedOrders}
-            </strong>
-          </div>
+    <div className="dashboard-status-card">
+      <span>Confirmed</span>
+      <strong>
+        {confirmedOrders}
+      </strong>
+    </div>
 
-          <div className="admin-order-overview-card">
-            <span>Shipped</span>
-            <strong>
-              {shippedOrders}
-            </strong>
-          </div>
+    <div className="dashboard-status-card">
+      <span>Shipped</span>
+      <strong>
+        {shippedOrders}
+      </strong>
+    </div>
 
-          <div className="admin-order-overview-card">
-            <span>Delivered</span>
-            <strong>
-              {deliveredOrders}
-            </strong>
-          </div>
+    <div className="dashboard-status-card">
+      <span>Delivered</span>
+      <strong>
+        {deliveredOrders}
+      </strong>
+    </div>
 
-          <div className="admin-order-overview-card">
-            <span>Cancelled</span>
-            <strong>
-              {cancelledOrders}
-            </strong>
-          </div>
+    <div className="dashboard-status-card">
+      <span>Cancelled</span>
+      <strong>
+        {cancelledOrders}
+      </strong>
+    </div>
 
-        </div>
+  </div>
 
-      </div>
+</div>
             {/* ======================================
           LOW STOCK PRODUCTS
       ====================================== */}
@@ -1071,10 +1071,10 @@ function Admin() {
 
                 <div
                   key={product.id}
-                  className="low-stock-card"
+                  className="low-stock-product"
                 >
 
-                  <div className="low-stock-image">
+                  <div className="low-stock-product-image">
 
                     {product.image ? (
 
@@ -1093,7 +1093,7 @@ function Admin() {
 
                   </div>
 
-                  <div className="low-stock-info">
+                  <div className="low-stock-product-info">
 
                     <strong>
                       {product.name}
@@ -2292,29 +2292,41 @@ function Admin() {
                             className="order-item-card"
                           >
 
-                            <div className="order-item-image">
+                           <div className="order-item-image">
+  {(() => {
+    const orderProduct = products.find(
+      (product) =>
+        String(product.id) === String(item.productId) ||
+        String(product.id) === String(item.product?.id) ||
+        product.name === item.name ||
+        product.name === item.productName
+    );
 
-                              {item.image ? (
+    const productImage =
+      item.image ||
+      item.product?.image ||
+      orderProduct?.image;
 
-                                <img
-                                  src={
-                                    item.image
-                                  }
-                                  alt={
-                                    item.name ||
-                                    "Product"
-                                  }
-                                />
-
-                              ) : (
-
-                                <div className="admin-no-image">
-                                  No Image
-                                </div>
-
-                              )}
-
-                            </div>
+    return productImage ? (
+      <img
+        src={productImage}
+        alt={
+          item.name ||
+          item.productName ||
+          orderProduct?.name ||
+          "Product"
+        }
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+        }}
+      />
+    ) : (
+      <div className="admin-no-image">
+        No Image
+      </div>
+    );
+  })()}
+</div>
 
 
                             <div className="order-item-info">

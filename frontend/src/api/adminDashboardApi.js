@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "hhttps://lapzone-hq43.onrender.com/api",
+  baseURL: "https://lapzone-hq43.onrender.com/api",
 });
 
 export const getDashboardStats = () => {

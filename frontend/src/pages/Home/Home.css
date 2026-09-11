@@ -4,12 +4,18 @@
 
 .featured {
   position: relative;
-  padding: 90px 6%;
+
+  padding: 90px 6% 110px;
+
   background: #ffffff;
-  overflow: hidden;
+
+  overflow: visible;
 }
 
-/* Soft background decoration */
+
+/* ==========================================
+   SOFT BACKGROUND DECORATION
+========================================== */
 
 .featured::before {
   content: "";
@@ -40,6 +46,7 @@
 
 .featured h2 {
   position: relative;
+
   z-index: 2;
 
   text-align: center;
@@ -54,6 +61,7 @@
 
   color: #111827;
 }
+
 
 .featured h2::after {
   content: "";
@@ -81,9 +89,11 @@
 
 .product-container {
   position: relative;
+
   z-index: 2;
 
   width: 100%;
+
   max-width: 1400px;
 
   margin: 0 auto;
@@ -95,25 +105,90 @@
 
   gap: 28px;
 
-  align-items: stretch;
+  align-items: start;
 }
 
 
 /* ==========================================
-   PRODUCT CARD
+   PRODUCT CARD WRAPPER
 ========================================== */
 
 .product-container > * {
   width: 100%;
+
   min-width: 0;
+
+  min-height: 0;
 
   transition:
     transform 0.35s ease,
     box-shadow 0.35s ease;
 }
 
+
+/* ==========================================
+   CARD HOVER
+========================================== */
+
 .product-container > *:hover {
   transform: translateY(-8px);
+}
+
+
+/* ==========================================
+   MAKE PRODUCT CARD FIT CONTENT
+========================================== */
+
+.product-container .product-wrapper {
+  height: auto;
+
+  min-height: 0;
+
+  overflow: visible;
+}
+
+
+.product-container .product-card {
+  height: auto;
+
+  min-height: 0;
+
+  overflow: visible;
+}
+
+
+/* ==========================================
+   BUTTON AREA
+========================================== */
+
+.product-container .buttons {
+  position: relative;
+
+  z-index: 10;
+}
+
+
+/* ==========================================
+   BUTTONS MUST REMAIN CLICKABLE
+========================================== */
+
+.product-container button {
+  position: relative;
+
+  z-index: 11;
+
+  pointer-events: auto;
+}
+
+
+/* ==========================================
+   PRODUCT LINK
+========================================== */
+
+.product-container .product-link {
+  position: relative;
+
+  z-index: 1;
 }
 
 
@@ -122,6 +197,10 @@
 ========================================== */
 
 @media (max-width: 1100px) {
+
+  .featured {
+    padding: 80px 5% 100px;
+  }
 
   .product-container {
     grid-template-columns:
@@ -140,8 +219,9 @@
 @media (max-width: 650px) {
 
   .featured {
-    padding: 65px 20px;
+    padding: 65px 20px 90px;
   }
+
 
   .product-container {
     grid-template-columns: 1fr;
@@ -149,11 +229,13 @@
     gap: 22px;
   }
 
+
   .featured h2 {
     margin-bottom: 35px;
   }
 
 }
+
 
 /* ==========================================
    SHOP BY BRAND
@@ -161,18 +243,27 @@
 
 .brands {
   position: relative;
+
   padding: 90px 0;
+
   background: #f8faff;
+
   overflow: hidden;
 }
 
-/* Soft background glow */
+
+/* ==========================================
+   LEFT BACKGROUND GLOW
+========================================== */
 
 .brands::before {
   content: "";
+
   position: absolute;
+
   width: 500px;
   height: 500px;
+
   left: -180px;
   top: 20px;
 
@@ -183,16 +274,23 @@
   );
 
   filter: blur(30px);
+
   pointer-events: none;
 }
 
-/* Right glow */
+
+/* ==========================================
+   RIGHT BACKGROUND GLOW
+========================================== */
 
 .brands::after {
   content: "";
+
   position: absolute;
+
   width: 450px;
   height: 450px;
+
   right: -180px;
   bottom: -180px;
 
@@ -203,6 +301,7 @@
   );
 
   filter: blur(30px);
+
   pointer-events: none;
 }
 
@@ -213,6 +312,7 @@
 
 .brands h2 {
   position: relative;
+
   z-index: 2;
 
   text-align: center;
@@ -220,12 +320,14 @@
   margin: 0 0 48px;
 
   font-size: clamp(30px, 4vw, 42px);
+
   font-weight: 700;
 
   letter-spacing: -1.2px;
 
   color: #111827;
 }
+
 
 .brands h2::after {
   content: "";
@@ -253,6 +355,7 @@
 
 .brand-slider {
   position: relative;
+
   z-index: 2;
 
   width: 100%;
@@ -263,7 +366,9 @@
 }
 
 
-/* Fade edges */
+/* ==========================================
+   FADE EDGES
+========================================== */
 
 .brand-slider::before,
 .brand-slider::after {
@@ -281,6 +386,7 @@
   pointer-events: none;
 }
 
+
 .brand-slider::before {
   left: 0;
 
@@ -290,6 +396,7 @@
     transparent
   );
 }
+
 
 .brand-slider::after {
   right: 0;
@@ -315,10 +422,12 @@
 
   width: max-content;
 
-  animation: scrollBrands 24s linear infinite;
+  animation:
+    scrollBrands 24s linear infinite;
 
   will-change: transform;
 }
+
 
 .brand-track:hover {
   animation-play-state: paused;
@@ -336,6 +445,7 @@
     transform 0.35s ease,
     filter 0.35s ease;
 }
+
 
 .brand-track > *:hover {
   transform: translateY(-8px);
@@ -362,7 +472,7 @@
 
 
 /* ==========================================
-   MOBILE
+   BRAND MOBILE
 ========================================== */
 
 @media (max-width: 768px) {
@@ -371,9 +481,11 @@
     padding: 65px 0;
   }
 
+
   .brands h2 {
     margin-bottom: 35px;
   }
+
 
   .brand-track {
     gap: 18px;
@@ -381,9 +493,10 @@
     animation-duration: 20s;
   }
 
+
   .brand-slider::before,
   .brand-slider::after {
     width: 60px;
   }
 
-}   
+}

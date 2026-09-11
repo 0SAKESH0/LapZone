@@ -1,4 +1,7 @@
 import "./Home.css";
+
+import { useEffect, useState } from "react";
+
 import Hero from "../../components/Hero/Hero";
 import BrandCard from "../../components/BrandCard/BrandCard";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -8,9 +11,15 @@ import CustomerReviews from "../../components/CustomerReviews/CustomerReviews";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 
-import products from "../../data/products"; 
+import products from "../../data/products";
+
 
 function Home() {
+
+  // ==========================================
+  // BRANDS
+  // ==========================================
+
   const brands = [
     {
       name: "Apple",
@@ -36,14 +45,88 @@ function Home() {
       name: "Acer",
       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Acer_2011.svg/960px-Acer_2011.svg.png?_=20241111050646",
     },
-  ];  
+  ];
+
+
+  // ==========================================
+  // FEATURED PRODUCTS
+  // ==========================================
+
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+
+
+  // ==========================================
+  // GET STOCK FROM BACKEND
+  // ==========================================
+
+  useEffect(() => {
+
+    fetch("https://lapzone-hq43.onrender.com/api/products")
+
+      .then((response) => {
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+
+        return response.json();
+
+      })
+
+      .then((backendProducts) => {
+
+        const updatedProducts = products.map((localProduct) => {
+
+          const backendProduct = backendProducts.find(
+            (item) =>
+              Number(item.id) === Number(localProduct.id)
+          );
+
+
+          return {
+            ...localProduct,
+
+            stock: backendProduct
+              ? backendProduct.stock
+              : 0,
+          };
+
+        });
+
+
+        setFeaturedProducts(updatedProducts);
+
+      })
+
+      .catch((error) => {
+
+        console.error(
+          "Failed to load product stock:",
+          error
+        );
+
+      });
+
+  }, []);
+
+
+  // ==========================================
+  // RETURN
+  // ==========================================
 
   return (
     <>
-     
+
+      {/* ======================================
+          HERO
+      ====================================== */}
+
       <Hero />
 
-      {/* Shop By Brand */}
+
+      {/* ======================================
+          SHOP BY BRAND
+      ====================================== */}
 
       <section className="brands">
 
@@ -53,13 +136,17 @@ function Home() {
 
           <div className="brand-track">
 
-            {[...brands, ...brands].map((brand, index) => (
-              <BrandCard
-                key={index}
-                name={brand.name}
-                logo={brand.logo}
-              />
-            ))}
+            {[...brands, ...brands].map(
+              (brand, index) => (
+
+                <BrandCard
+                  key={index}
+                  name={brand.name}
+                  logo={brand.logo}
+                />
+
+              )
+            )}
 
           </div>
 
@@ -67,7 +154,10 @@ function Home() {
 
       </section>
 
-      {/* Featured Products */}
+
+      {/* ======================================
+          FEATURED LAPTOPS
+      ====================================== */}
 
       <section className="featured">
 
@@ -75,25 +165,39 @@ function Home() {
 
         <div className="product-container">
 
-          {products.slice(0,4).map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              
-            />
-          ))}
+          {featuredProducts
+            .slice(0, 4)
+            .map((product) => (
+
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+
+            ))}
 
         </div>
 
       </section>
+
+
+      {/* ======================================
+          OTHER HOME SECTIONS
+      ====================================== */}
+
       <WhyChoose />
+
       <SpecialOffers />
+
       <CustomerReviews />
+
       <Newsletter />
+
       <Footer />
 
     </>
   );
 }
+
 
 export default Home;
