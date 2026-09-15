@@ -1032,3 +1032,136 @@
 
     z-index: 1;
 }
+
+/* ==========================================
+   PREMIUM BUY NOW BUTTON
+========================================== */
+
+.buy-now-btn {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: none;
+  cursor: pointer;
+
+  transition: background 0.3s ease;
+}
+
+/* BUY NOW TEXT */
+
+.buy-now-text {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  transition: top 0.45s ease;
+}
+
+/* ARROW ICON */
+
+.buy-now-icon {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  transition: top 0.45s ease;
+}
+
+.buy-now-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+
+
+/* HOVER */
+
+.buy-now-btn:hover .buy-now-text {
+  top: -100%;
+}
+
+.buy-now-btn:hover .buy-now-icon {
+  top: 0;
+}
+
+/* DISABLED */
+
+.buy-now-btn:disabled {
+  cursor: not-allowed;
+}
+
+.buy-now-btn:disabled:hover .buy-now-text {
+  top: 0;
+}
+
+.buy-now-btn:disabled:hover .buy-now-icon {
+  top: 100%;
+}
+
+/* =========================================
+   MOBILE PRODUCTS GRID
+========================================= */
+
+@media (max-width: 768px) {
+
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 0 16px;
+    }
+
+}
+/* =========================================
+   572px MOBILE OPTIMIZATION
+========================================= */
+
+@media (max-width: 600px) {
+
+    .products-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 24px;
+        padding: 0 18px;
+        box-sizing: border-box;
+    }
+
+    .product-wrapper.premium {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .product-wrapper.premium .outer {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-wrapper.premium .card {
+        width: 100%;
+        min-height: 0;
+        height: auto;
+        padding: 18px;
+    }
+
+}

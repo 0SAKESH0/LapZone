@@ -1,7 +1,5 @@
 import "./Home.css";
 
-import { useEffect, useState } from "react";
-
 import Hero from "../../components/Hero/Hero";
 import BrandCard from "../../components/BrandCard/BrandCard";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -13,13 +11,7 @@ import Footer from "../../components/Footer/Footer";
 
 import products from "../../data/products";
 
-
 function Home() {
-
-  // ==========================================
-  // BRANDS
-  // ==========================================
-
   const brands = [
     {
       name: "Apple",
@@ -47,143 +39,48 @@ function Home() {
     },
   ];
 
-
-  // ==========================================
-  // FEATURED PRODUCTS
-  // ==========================================
-
-  const [featuredProducts, setFeaturedProducts] = useState([]);
-
-
-  // ==========================================
-  // GET STOCK FROM BACKEND
-  // ==========================================
-
-  useEffect(() => {
-
-    fetch("https://lapzone-hq43.onrender.com/api/products")
-
-      .then((response) => {
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        return response.json();
-
-      })
-
-      .then((backendProducts) => {
-
-        const updatedProducts = products.map((localProduct) => {
-
-          const backendProduct = backendProducts.find(
-            (item) =>
-              Number(item.id) === Number(localProduct.id)
-          );
-
-
-          return {
-            ...localProduct,
-
-            stock: backendProduct
-              ? backendProduct.stock
-              : 0,
-          };
-
-        });
-
-
-        setFeaturedProducts(updatedProducts);
-
-      })
-
-      .catch((error) => {
-
-        console.error(
-          "Failed to load product stock:",
-          error
-        );
-
-      });
-
-  }, []);
-
-
-  // ==========================================
-  // RETURN
-  // ==========================================
-
   return (
     <>
-
-      {/* ======================================
-          HERO
-      ====================================== */}
-
       <Hero />
 
-
       {/* ======================================
-          SHOP BY BRAND
+          BRANDS
       ====================================== */}
 
       <section className="brands">
-
         <h2>Shop By Brand</h2>
 
         <div className="brand-slider">
-
           <div className="brand-track">
-
             {[...brands, ...brands].map(
               (brand, index) => (
-
                 <BrandCard
                   key={index}
                   name={brand.name}
                   logo={brand.logo}
                 />
-
               )
             )}
-
           </div>
-
         </div>
-
       </section>
 
-
       {/* ======================================
-          FEATURED LAPTOPS
+          FEATURED PRODUCTS
       ====================================== */}
 
       <section className="featured">
-
         <h2>Featured Laptops</h2>
 
         <div className="product-container">
-
-          {featuredProducts
-            .slice(0, 4)
-            .map((product) => (
-
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
-
-            ))}
-
+          {products.slice(0, 4).map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+            />
+          ))}
         </div>
-
       </section>
-
-
-      {/* ======================================
-          OTHER HOME SECTIONS
-      ====================================== */}
 
       <WhyChoose />
 
@@ -194,10 +91,8 @@ function Home() {
       <Newsletter />
 
       <Footer />
-
     </>
   );
 }
-
 
 export default Home;

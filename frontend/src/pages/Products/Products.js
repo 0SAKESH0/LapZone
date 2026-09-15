@@ -1,30 +1,25 @@
 import "./Products.css";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import {
   FaChevronDown,
   FaChevronUp,
   FaSearch,
-  FaSlidersH
+  FaSlidersH,
 } from "react-icons/fa";
-
-import { getProducts } from "../../api/productApi";
 
 import ProductCard from "../../components/ProductCard/ProductCard";
 
+import productsData from "../../data/products";
 
 function Products() {
 
   // ==========================================
-  // PRODUCTS FROM JAVA BACKEND
+  // PRODUCTS FROM LOCAL DATA
   // ==========================================
 
-  const [products, setProducts] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState("");
+  const [products] = useState(productsData);
 
 
   // ==========================================
@@ -58,104 +53,6 @@ function Products() {
 
 
   // ==========================================
-  // FETCH PRODUCTS FROM JAVA
-  // ==========================================
-
-  useEffect(() => {
-
-    const fetchProducts = async () => {
-
-      try {
-
-        setLoading(true);
-
-        setError("");
-
-        const response = await getProducts();
-
-        console.log(
-          "Products from Java:",
-          response.data
-        );
-
-
-        // Convert Java product structure
-        // into the structure used by ProductCard
-
-        const formattedProducts =
-          response.data.map((product) => ({
-
-            id: product.id,
-
-            name: product.name,
-
-            brand: product.brand,
-
-            price: product.price,
-
-            rating: product.rating,
-
-            discount: product.discount,
-
-            category: product.category,
-
-            image: product.image,
-
-            description: product.description,
-
-
-            // Convert flat Java fields
-            // back into nested specs
-
-            specs: {
-
-              processor: product.processor,
-
-              ram: product.ram,
-
-              storage: product.storage,
-
-              display: product.display,
-
-              battery: product.battery,
-
-              warranty: product.warranty,
-
-            },
-
-            stock: product.stock,
-
-          }));
-
-
-        setProducts(formattedProducts);
-
-      } catch (error) {
-
-        console.error(
-          "Failed to fetch products:",
-          error
-        );
-
-        setError(
-          "Failed to load products. Please try again."
-        );
-
-      } finally {
-
-        setLoading(false);
-
-      }
-
-    };
-
-
-    fetchProducts();
-
-  }, []);
-
-
-  // ==========================================
   // BRANDS
   // ==========================================
 
@@ -178,11 +75,8 @@ function Products() {
   const toggleSection = (section) => {
 
     setOpenSections((prev) => ({
-
       ...prev,
-
       [section]: !prev[section],
-
     }));
 
   };
@@ -248,7 +142,9 @@ function Products() {
     });
 
 
-    // Price: Low → High
+    // ==========================================
+    // PRICE: LOW → HIGH
+    // ==========================================
 
     if (sortBy === "price-low") {
 
@@ -259,7 +155,9 @@ function Products() {
     }
 
 
-    // Price: High → Low
+    // ==========================================
+    // PRICE: HIGH → LOW
+    // ==========================================
 
     if (sortBy === "price-high") {
 
@@ -270,7 +168,9 @@ function Products() {
     }
 
 
-    // Highest Rated
+    // ==========================================
+    // HIGHEST RATED
+    // ==========================================
 
     if (sortBy === "rating") {
 
@@ -281,7 +181,9 @@ function Products() {
     }
 
 
-    // Name
+    // ==========================================
+    // NAME
+    // ==========================================
 
     if (sortBy === "name") {
 
@@ -303,85 +205,6 @@ function Products() {
     maxPrice,
     sortBy,
   ]);
-
-
-  // ==========================================
-  // LOADING SCREEN
-  // ==========================================
-
-  if (loading) {
-
-    return (
-
-      <div className="products-page">
-
-        <main className="products-content">
-
-          <div className="no-products">
-
-            <h2>
-              Loading laptops...
-            </h2>
-
-            <p>
-              Fetching products from LapZone server.
-            </p>
-
-          </div>
-
-        </main>
-
-      </div>
-
-    );
-
-  }
-
-
-  // ==========================================
-  // ERROR SCREEN
-  // ==========================================
-
-  if (error) {
-
-    return (
-
-      <div className="products-page">
-
-        <main className="products-content">
-
-          <div className="no-products">
-
-            <div className="no-products-icon">
-              <FaSearch />
-            </div>
-
-            <h2>
-              Unable to load laptops
-            </h2>
-
-            <p>
-              {error}
-            </p>
-
-            <button
-              onClick={() =>
-                window.location.reload()
-              }
-              className="reset-btn"
-            >
-              Try Again
-            </button>
-
-          </div>
-
-        </main>
-
-      </div>
-
-    );
-
-  }
 
 
   // ==========================================

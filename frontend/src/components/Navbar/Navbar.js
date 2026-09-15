@@ -172,7 +172,11 @@ function Navbar() {
 
           <FaRegHeart />
 
-          {wishlist.length > 0 && (
+<span className="mobile-nav-label">
+  Wishlist
+</span>
+
+{wishlist.length > 0 && (
 
             <span className="nav-badge">
               {wishlist.length}
@@ -198,7 +202,11 @@ function Navbar() {
 
           <FaShoppingCart />
 
-          {cartCount > 0 && (
+<span className="mobile-nav-label">
+  Cart
+</span>
+
+{cartCount > 0 && (
 
             <span className="nav-badge">
               {cartCount}
@@ -227,6 +235,10 @@ function Navbar() {
           >
 
             <FaUserCircle />
+
+<span className="mobile-nav-label">
+  Account
+</span>
 
           </button>
 

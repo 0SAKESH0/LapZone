@@ -788,35 +788,141 @@
   font-size: 14px;
 }
 
+
 /* =========================================
-   MOBILE
+   MOBILE PRODUCT CARD
 ========================================= */
 
 @media (max-width: 768px) {
 
-    .product-wrapper {
-        width: 280px;
-        height: 480px;
+    .product-wrapper.premium {
+        width: min(100%, 360px);
+        height: auto;
+        margin: 0 auto;
     }
 
-    .product-card {
-        padding: 16px;
+    .product-wrapper.premium .outer {
+        width: 100%;
+        height: auto;
+        min-height: 0;
     }
 
-    .product-card .image-box {
-        height: 205px;
+    .product-wrapper.premium .card {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 18px;
+        border-radius: 22px;
     }
 
-    .product-card .image-box img {
-        width: 200px;
+    .product-wrapper.premium .image-box {
+        height: 165px;
     }
 
-    .product-card .product-content h3 {
-        font-size: 21px;
+    .product-wrapper.premium .image-box img {
+        width: 175px;
+        max-height: 150px;
     }
 
-    .product-card .product-content h2 {
+    .product-wrapper.premium .product-content h3 {
+        margin: 7px 0 8px;
+        font-size: 20px;
+    }
+
+    .product-wrapper.premium .rating {
+        margin-bottom: 9px;
+        font-size: 13px;
+    }
+
+    .product-wrapper.premium .product-content h2 {
         font-size: 27px;
     }
 
+    .product-wrapper.premium .buttons {
+        margin-top: 14px;
+        grid-template-columns: 1fr 50px;
+        gap: 9px;
+    }
+
+    .product-wrapper.premium .cart-btn {
+        height: 47px;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+
+    .product-wrapper.premium .buy-now-btn {
+        height: 47px;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+
+    .product-wrapper.premium .heart-btn {
+        width: 50px;
+        height: 47px;
+    }
+
+    .product-wrapper.premium .cart-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .product-wrapper.premium .heart-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .product-wrapper.premium:hover .outer {
+        transform: none;
+    }
+
+    .product-wrapper.premium:hover .image-box img {
+        transform: none;
+    }
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 480px) {
+
+    .product-wrapper.premium {
+        width: calc(100vw - 32px);
+        max-width: 350px;
+    }
+
+    .product-wrapper.premium .card {
+        padding: 16px;
+    }
+
+    .product-wrapper.premium .image-box {
+        height: 145px;
+    }
+
+    .product-wrapper.premium .image-box img {
+        width: 155px;
+        max-height: 135px;
+    }
+
+    .product-wrapper.premium .product-content h3 {
+        font-size: 19px;
+    }
+
+    .product-wrapper.premium .product-content h2 {
+        font-size: 25px;
+    }
+
+    .product-wrapper.premium .cart-btn {
+        height: 45px;
+    }
+
+    .product-wrapper.premium .buy-now-btn {
+        height: 45px;
+    }
+
+    .product-wrapper.premium .heart-btn {
+        height: 45px;
+        width: 48px;
+    }
 }
