@@ -1,30 +1,89 @@
-import { createContext, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 
 export const WishlistContext = createContext();
 
 function WishlistProvider({ children }) {
 
-  const [wishlist, setWishlist] = useState([]);
+  // ==========================================
+  // LOAD WISHLIST FROM LOCAL STORAGE
+  // ==========================================
 
-  const addToWishlist = (product) => {
+  const [wishlist, setWishlist] = useState(() => {
 
-    const exists = wishlist.find(
-      (item) => item.id === product.id
-    );
+    try {
 
-    if (exists) {
+      const data =
+        localStorage.getItem("lapzone-wishlist");
 
-      setWishlist(
-        wishlist.filter((item) => item.id !== product.id)
+      return data ? JSON.parse(data) : [];
+
+    } catch (error) {
+
+      console.error(
+        "Failed to load wishlist:",
+        error
       );
 
-    } else {
-
-      setWishlist([...wishlist, product]);
+      return [];
 
     }
 
+  });
+
+
+  // ==========================================
+  // SAVE WISHLIST WHENEVER IT CHANGES
+  // ==========================================
+
+  useEffect(() => {
+
+    localStorage.setItem(
+      "lapzone-wishlist",
+      JSON.stringify(wishlist)
+    );
+
+  }, [wishlist]);
+
+
+  // ==========================================
+  // ADD / REMOVE FROM WISHLIST
+  // ==========================================
+
+  const addToWishlist = (product) => {
+
+    setWishlist((currentWishlist) => {
+
+      const exists = currentWishlist.some(
+        (item) => item.id === product.id
+      );
+
+      // Remove if already exists
+      if (exists) {
+
+        return currentWishlist.filter(
+          (item) => item.id !== product.id
+        );
+
+      }
+
+      // Add new product
+      return [
+        ...currentWishlist,
+        product,
+      ];
+
+    });
+
   };
+
+
+  // ==========================================
+  // CHECK WISHLIST
+  // ==========================================
 
   const isInWishlist = (id) => {
 
@@ -34,7 +93,13 @@ function WishlistProvider({ children }) {
 
   };
 
+
+  // ==========================================
+  // PROVIDER
+  // ==========================================
+
   return (
+
     <WishlistContext.Provider
       value={{
         wishlist,
@@ -42,9 +107,13 @@ function WishlistProvider({ children }) {
         isInWishlist,
       }}
     >
+
       {children}
+
     </WishlistContext.Provider>
+
   );
+
 }
 
 export default WishlistProvider;
