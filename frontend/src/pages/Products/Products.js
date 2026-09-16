@@ -227,10 +227,6 @@ function Products() {
 
           <div>
 
-            <span className="filter-label">
-              Refine
-            </span>
-
             <h2>
               Filters
             </h2>
