@@ -521,80 +521,366 @@
 
 
 
-
 /* ==========================================
    RESPONSIVE
 ========================================== */
 
 @media (max-width: 900px) {
+
   .hero {
-    min-height: 750px;
+    min-height: 680px;
+
     flex-direction: column;
+
     text-align: center;
-    padding: 70px 30px;
+
+    padding: 55px 30px 35px;
+
+    justify-content: flex-start;
   }
+
+
+  /* ==========================================
+     CONTENT
+  ========================================== */
 
   .hero-content {
     width: 100%;
+    max-width: 650px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .hero-content p {
-    margin-left: auto;
-    margin-right: auto;
+
+  /* ==========================================
+     BADGE
+  ========================================== */
+
+  .hero-badge {
+    margin-bottom: 18px;
+
+    padding: 8px 15px;
+
+    font-size: 13px;
   }
+
+
+  /* ==========================================
+     HEADING
+  ========================================== */
+
+  .hero-content h1 {
+    font-size: clamp(40px, 7vw, 58px);
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+  }
+
+
+  /* ==========================================
+     DESCRIPTION
+  ========================================== */
+
+  .hero-content p {
+    max-width: 560px;
+
+    margin: 20px auto 25px;
+
+    font-size: 16px;
+
+    line-height: 1.65;
+  }
+
+
+  /* ==========================================
+     SHOP BUTTON
+  ========================================== */
+
+  .shop-btn {
+    width: min(100%, 500px);
+
+    padding: 14px 24px;
+
+    font-size: 16px;
+  }
+
+
+  /* ==========================================
+     STATS
+  ========================================== */
 
   .hero-stats {
     justify-content: center;
+
+    gap: 24px;
+
+    margin-top: 28px;
   }
+
+
+  .stat strong {
+    font-size: 20px;
+  }
+
+
+  .stat span {
+    font-size: 12px;
+  }
+
+
+  .stat:not(:last-child) {
+    padding-right: 24px;
+  }
+
+
+  /* ==========================================
+     LAPTOP
+  ========================================== */
 
   .hero-image {
     width: 100%;
-    margin-top: 50px;
+
+    margin-top: 22px;
+
+    display: flex;
+
+    justify-content: center;
   }
+
 
   .hero-image img {
-    max-width: 450px;
+    width: 100%;
+
+    max-width: 350px;
   }
 
-  .floating-spec {
-    display: none;
-  }
-}
-
-@media (max-width: 500px) {
-  .hero {
-    min-height: 700px;
-    padding: 55px 20px;
-  }
-
-  .hero-content h1 {
-    font-size: 44px;
-    letter-spacing: -1.5px;
-  }
-
-  .hero-content p {
-    font-size: 16px;
-    line-height: 1.7;
-  }
-
-  .hero-stats {
-    gap: 15px;
-  }
-
-  .stat:not(:last-child) {
-    padding-right: 15px;
-  }
-
-  .stat strong {
-    font-size: 18px;
-  }
-
-  .hero-image img {
-    max-width: 340px;
-  }
 
   .laptop-glow {
     width: 300px;
     height: 300px;
   }
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+  .hero {
+    min-height: 0;
+
+    height: auto;
+
+    padding: 42px 20px 25px;
+  }
+
+
+  /* ==========================================
+     BADGE
+  ========================================== */
+
+  .hero-badge {
+    margin-bottom: 15px;
+
+    padding: 7px 13px;
+
+    font-size: 12px;
+
+    gap: 6px;
+  }
+
+
+  /* ==========================================
+     HEADING
+  ========================================== */
+
+  .hero-content h1 {
+    font-size: 40px;
+
+    line-height: 1.02;
+
+    letter-spacing: -1.7px;
+  }
+
+
+  .hero-content h1 span {
+    margin-top: 2px;
+  }
+
+
+  /* ==========================================
+     DESCRIPTION
+  ========================================== */
+
+  .hero-content p {
+    max-width: 500px;
+
+    margin: 17px auto 22px;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+
+  /* ==========================================
+     SHOP BUTTON
+  ========================================== */
+
+  .shop-btn {
+    width: 100%;
+
+    max-width: 100%;
+
+    min-height: 48px;
+
+    padding: 13px 20px;
+
+    border-radius: 11px;
+
+    font-size: 16px;
+  }
+
+
+  .button-arrow {
+    font-size: 20px;
+  }
+
+
+  /* ==========================================
+     STATS
+  ========================================== */
+
+  .hero-stats {
+    width: 100%;
+
+    justify-content: center;
+
+    gap: 16px;
+
+    margin-top: 27px;
+  }
+
+
+  .stat {
+    gap: 2px;
+  }
+
+
+  .stat strong {
+    font-size: 18px;
+  }
+
+
+  .stat span {
+    font-size: 11px;
+  }
+
+
+  .stat:not(:last-child) {
+    padding-right: 16px;
+  }
+
+
+  /* ==========================================
+     LAPTOP
+  ========================================== */
+
+  .hero-image {
+    width: 100%;
+
+    margin-top: 20px;
+  }
+
+
+  .hero-image img {
+    width: 100%;
+
+    max-width: 310px;
+  }
+
+
+  .laptop-glow {
+    width: 270px;
+
+    height: 270px;
+  }
+
+}
+
+
+/* ==========================================
+   SMALL PHONES
+========================================== */
+
+@media (max-width: 400px) {
+
+  .hero {
+    padding: 35px 16px 20px;
+  }
+
+
+  .hero-content h1 {
+    font-size: 34px;
+
+    letter-spacing: -1.3px;
+  }
+
+
+  .hero-content p {
+    font-size: 14px;
+
+    line-height: 1.55;
+  }
+
+
+  .shop-btn {
+    min-height: 46px;
+
+    font-size: 15px;
+  }
+
+
+  .hero-stats {
+    gap: 11px;
+  }
+
+
+  .stat strong {
+    font-size: 16px;
+  }
+
+
+  .stat span {
+    font-size: 10px;
+  }
+
+
+  .stat:not(:last-child) {
+    padding-right: 11px;
+  }
+
+
+  .hero-image {
+    margin-top: 16px;
+  }
+
+
+  .hero-image img {
+    max-width: 270px;
+  }
+
+
+  .laptop-glow {
+    width: 240px;
+
+    height: 240px;
+  }
+
 }
